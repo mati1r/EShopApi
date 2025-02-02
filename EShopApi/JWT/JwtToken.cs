@@ -1,12 +1,12 @@
-﻿using ApiTemplate.IService;
-using ApiTemplate.Services;
+﻿using Core.IService;
+using Core.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 
-namespace ApiTemplate.JWT;
+namespace Application.JWT;
 
 public static class JwtToken
 {
@@ -41,7 +41,7 @@ public static class JwtToken
             };
             token.Events = new JwtBearerEvents
             {
-                OnTokenValidated = context =>
+                OnTokenValidated = async context =>
                 {
                     var tokenValidatorService = context.HttpContext.RequestServices.GetRequiredService<IAuthService>();
 
@@ -49,19 +49,16 @@ public static class JwtToken
 
                     if (token == null) { 
                         context.Fail("Token is not valid.");
-                        return Task.CompletedTask;
                     }
 
                     var authorizationHeader = context.HttpContext.Request.Headers["Authorization"].ToString();
                     string tokenValue = authorizationHeader.StartsWith("Bearer ")
                         ? authorizationHeader.Substring("Bearer ".Length).Trim() : authorizationHeader;
 
-                    if (!tokenValidatorService.isValidAccessToken(tokenValue))
+                    if (! await tokenValidatorService.isValidAccessToken(tokenValue))
                     {
                         context.Fail("Token is not valid.");
                     }
-
-                    return Task.CompletedTask;
                 }
             };
         });

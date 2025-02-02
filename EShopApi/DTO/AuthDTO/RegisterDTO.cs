@@ -1,4 +1,4 @@
-﻿namespace ApiTemplate.DTO.AuthDTO;
+﻿namespace Application.DTO.AuthDTO;
 
 public class RegisterDTO
 {

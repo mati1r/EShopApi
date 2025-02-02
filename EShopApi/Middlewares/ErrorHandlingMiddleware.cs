@@ -1,8 +1,8 @@
-﻿using ApiTemplate.Exceptions;
+﻿using Core.Exceptions;
 using System.Net;
 using System.Text.Json;
 
-namespace ApiTemplate.Middlewares;
+namespace Application.Middlewares;
 
 public class ErrorHandlingMiddleware
 {

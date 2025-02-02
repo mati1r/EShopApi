@@ -1,17 +1,13 @@
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using System.Text;
-using Microsoft.Extensions.Options;
-using Microsoft.AspNetCore.RateLimiting;
 using System.Threading.RateLimiting;
 using System.Security.Claims;
-using Microsoft.AspNetCore.Builder;
-using ApiTemplate.DB;
-using ApiTemplate.IService;
-using ApiTemplate.JWT;
-using ApiTemplate.Middlewares;
+using Core.IService;
+using Application.JWT;
+using Application.Middlewares;
+using Application.Dependency;
+using Infrastracture.Data;
+using Core;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -47,12 +43,15 @@ builder.Services.AddSwaggerGen(swagger =>
     });
 });
 
-string? connectionString = builder.Configuration["ConnectionStrings:DefaultConnection"];
+builder.Services.AddProjects(builder.Configuration);
 
-builder.Services.AddDbContext<DatabaseContext>(options =>
-    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)), ServiceLifetime.Scoped);
+if (builder.Environment.IsDevelopment())
+{
+    builder.Configuration.AddUserSecrets<Program>();
+}
 
-builder.Services.AddScoped<IAuthService, ApiTemplate.Services.AuthService>();
+builder.Services.AddScoped<IAuthService, Core.Services.AuthService>();
+builder.Services.AddScoped(typeof(IRepository<>), typeof(EntityFrameworkRepository<>));
 
 builder.Services.AddCustomJwtBearer(builder.Configuration);
 
