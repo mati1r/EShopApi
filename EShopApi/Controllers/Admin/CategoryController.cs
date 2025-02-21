@@ -23,5 +23,19 @@ namespace Application.Controllers.Admin
         {
             await _categoryService.Add(data.Name);
         }
+
+        [HttpPut]
+        [Route("Category")]
+        public async Task Update([FromBody] CategoryUpdate data)
+        {
+            await _categoryService.Update(data.Id, data.Name);
+        }
+
+        [HttpDelete]
+        [Route("Category")]
+        public async Task Delete([FromBody] CategoryDelete data)
+        {
+            await _categoryService.Delete(data.Id);
+        }
     }
 }

@@ -11,6 +11,11 @@ public class Category(
 
     [MaxLength(100)]
     public string Name { get; private set; } = name;
-
     public ICollection<Subcategory> Subcategories { get; private set; } = [];
+
+    public void Update(string name)
+    {
+        Name = name;
+    }
+
 }
