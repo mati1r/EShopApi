@@ -1,4 +1,6 @@
-﻿namespace EShopApi.Models.EShop;
+﻿using Core.Models.EShop;
+
+namespace EShopApi.Models.EShop;
 
 public class Product(
     int subcategoryId,
@@ -29,5 +31,6 @@ public class Product(
     public ICollection<ProductElement> ProductElements { get; private set; } = [];
     public ICollection<ProductPhotos> ProductPhotos { get; private set; } = [];
     public ICollection<ProductRefHistory> ProductRefHistory { get; private set;} = [];
+    public ICollection<Photos> Photos { get; private set;} = [];
 }
 

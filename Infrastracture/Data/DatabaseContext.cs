@@ -1,4 +1,5 @@
 ﻿using Core.Models;
+using Core.Models.EShop;
 using EShopApi.Models.EShop;
 using Microsoft.EntityFrameworkCore;
 
@@ -32,6 +33,9 @@ namespace Infrastracture.Data
 
             modelBuilder.Entity<ProductRefHistory>()
                 .HasKey(prh => new { prh.ProductId, prh.HistoryId });
+
+            modelBuilder.Entity<SubcategoryRefProductType>()
+                .HasKey(srpt => new { srpt.SubcategoryId, srpt.ProductTypeId });
 
             base.OnModelCreating(modelBuilder);
         }

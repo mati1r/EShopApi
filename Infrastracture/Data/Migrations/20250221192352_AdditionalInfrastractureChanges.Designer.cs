@@ -4,6 +4,7 @@ using Infrastracture.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ApiTemplate.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20250221192352_AdditionalInfrastractureChanges")]
+    partial class AdditionalInfrastractureChanges
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -77,9 +80,12 @@ namespace ApiTemplate.Migrations
                     b.Property<int>("ProductTypeId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("ProductId")
+                        .HasColumnType("int");
+
                     b.HasKey("SubcategoryId", "ProductTypeId");
 
-                    b.HasIndex("ProductTypeId");
+                    b.HasIndex("ProductId");
 
                     b.ToTable("SubcategoryRefProductType");
                 });
@@ -401,11 +407,9 @@ namespace ApiTemplate.Migrations
 
             modelBuilder.Entity("Core.Models.EShop.SubcategoryRefProductType", b =>
                 {
-                    b.HasOne("EShopApi.Models.EShop.ProductType", "ProductType")
+                    b.HasOne("EShopApi.Models.EShop.Product", "Product")
                         .WithMany("SubcategoryRefProductTypes")
-                        .HasForeignKey("ProductTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ProductId");
 
                     b.HasOne("EShopApi.Models.EShop.Subcategory", "Subcategory")
                         .WithMany("SubcategoryRefProductTypes")
@@ -413,7 +417,7 @@ namespace ApiTemplate.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("ProductType");
+                    b.Navigation("Product");
 
                     b.Navigation("Subcategory");
                 });
@@ -575,6 +579,8 @@ namespace ApiTemplate.Migrations
                     b.Navigation("ProductPhotos");
 
                     b.Navigation("ProductRefHistory");
+
+                    b.Navigation("SubcategoryRefProductTypes");
                 });
 
             modelBuilder.Entity("EShopApi.Models.EShop.ProductType", b =>
@@ -582,8 +588,6 @@ namespace ApiTemplate.Migrations
                     b.Navigation("ProductElements");
 
                     b.Navigation("ProductValues");
-
-                    b.Navigation("SubcategoryRefProductTypes");
                 });
 
             modelBuilder.Entity("EShopApi.Models.EShop.ProductValue", b =>

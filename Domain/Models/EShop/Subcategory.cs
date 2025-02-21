@@ -1,4 +1,6 @@
-﻿namespace EShopApi.Models.EShop;
+﻿using Core.Models.EShop;
+
+namespace EShopApi.Models.EShop;
 
 public class Subcategory(
     int categoryId, 
@@ -13,4 +15,5 @@ public class Subcategory(
     public virtual Category? Category { get; set; }
 
     public ICollection<Product> Products { get; private set; } = [];
+    public ICollection<SubcategoryRefProductType> SubcategoryRefProductTypes { get; private set; } = [];
 }
