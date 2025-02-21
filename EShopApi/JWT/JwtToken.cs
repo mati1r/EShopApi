@@ -1,9 +1,6 @@
-﻿using Core.IService;
-using Core.Services;
+﻿using Core.IServices;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 
 namespace Application.JWT;
@@ -55,7 +52,7 @@ public static class JwtToken
                     string tokenValue = authorizationHeader.StartsWith("Bearer ")
                         ? authorizationHeader.Substring("Bearer ".Length).Trim() : authorizationHeader;
 
-                    if (! await tokenValidatorService.isValidAccessToken(tokenValue))
+                    if (! await tokenValidatorService.IsValidAccessToken(tokenValue))
                     {
                         context.Fail("Token is not valid.");
                     }

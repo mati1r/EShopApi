@@ -2,7 +2,7 @@
 using System.Xml.Linq;
 using Core.DTO.AuthDTO;
 using Core.Exceptions;
-using Core.IService;
+using Core.IServices;
 using Core.Models;
 using Core.Specifications.Core;
 using Core.Validation;
@@ -28,21 +28,21 @@ public class AuthService : IAuthService
         _tokensRepository = tokensRepository;
     }
 
-    private async Task<bool> isUserNameTaken(string name)
+    private async Task<bool> IsUserNameTaken(string name)
     {
         var userSpec = new UniversalSpecification<User>(filter: u => u.Name == name).AddAsNoTracking();
         var userList = await _userRepository.ListAsync(userSpec);
         return userList.Any();
     }
 
-    private async Task<bool> isEmailAlreadyUsed(string email)
+    private async Task<bool> IsEmailAlreadyUsed(string email)
     {
         var userSpec = new UniversalSpecification<User>(filter: u => u.Email == email).AddAsNoTracking();
         var userList = await _userRepository.ListAsync(userSpec);
         return userList.Any();
     }
 
-    private async Task<User> getLogingUser(string name, string password)
+    private async Task<User> GetLogingUser(string name, string password)
     {
         var userSpec = new UniversalSpecification<User>(filter: u => u.Name == name).AddAsNoTracking();
         User? user = await _userRepository.FirstOrDefaultAsync(userSpec);
@@ -60,7 +60,7 @@ public class AuthService : IAuthService
         return user;
     }
 
-    private Tokens generateTokens(User user, IConfiguration _config)
+    private Tokens GenerateTokens(User user, IConfiguration _config)
     {
         var accessToken = AuthHelper.GenerateJWTToken(user, _config);
         var refreshToken = AuthHelper.GenerateRefreshToken(user.Id);
@@ -78,7 +78,7 @@ public class AuthService : IAuthService
         return tokens;
     }
 
-    private async Task setOldTokensToInvalid(int userId)
+    private async Task SetOldTokensToInvalid(int userId)
     {
         var tokenSpec = new UniversalSpecification<Tokens>(filter: t => t.UserId == userId);
         List<Tokens> oldTokens = await _tokensRepository.ListAsync(tokenSpec);
@@ -91,14 +91,14 @@ public class AuthService : IAuthService
         await _tokensRepository.SaveChangesAsync();
     }
 
-    public async Task<UserDTO> login(string name, string password)
+    public async Task<UserDTO> Login(string name, string password)
     {
-        User user = await getLogingUser(name, password);
+        User user = await GetLogingUser(name, password);
 
-        Tokens tokens = generateTokens(user, _config);
+        Tokens tokens = GenerateTokens(user, _config);
 
         //set invalid for all tokens that were used priviously (if user didn't used logout call)
-        await setOldTokensToInvalid(user.Id);
+        await SetOldTokensToInvalid(user.Id);
 
         await _userRepository.UpdateAsync(user);
 
@@ -113,14 +113,14 @@ public class AuthService : IAuthService
         return userDto;
     }
 
-    public async Task<UserDTO> register(string email, string name, string password)
+    public async Task<UserDTO> Register(string email, string name, string password)
     {
-        if (await isUserNameTaken(name))
+        if (await IsUserNameTaken(name))
         {
             throw new BadRequestException("Username is already taken.");
         }
 
-        if (await isEmailAlreadyUsed(email))
+        if (await IsEmailAlreadyUsed(email))
         {
             throw new BadRequestException("Email is already in use.");
         }
@@ -134,7 +134,7 @@ public class AuthService : IAuthService
         newUser.Password = Hash.HashPassword(password, newUser.Salt);
         newUser.Roles = ["User"];
 
-        Tokens tokens = generateTokens(newUser, _config);
+        Tokens tokens = GenerateTokens(newUser, _config);
 
 
         await _userRepository.AddAsync(newUser);
@@ -152,12 +152,12 @@ public class AuthService : IAuthService
         return userDto;
     }
 
-    public async Task logout(int userId)
+    public async Task Logout(int userId)
     {
-        await setOldTokensToInvalid(userId);
+        await SetOldTokensToInvalid(userId);
     }
 
-    public async Task<bool> isValidAccessToken(string tokenValue)
+    public async Task<bool> IsValidAccessToken(string tokenValue)
     {
         var tokenSpec = new UniversalSpecification<Tokens>(filter: t => t.AccessToken == tokenValue && t.IsValid == true);
         var token = await _tokensRepository.FirstOrDefaultAsync(tokenSpec);
@@ -170,7 +170,7 @@ public class AuthService : IAuthService
         return true;
     }
 
-    public async Task<Tokens?> isValidRefreshToken(string tokenValue)
+    public async Task<Tokens?> IsValidRefreshToken(string tokenValue)
     {
         var tokenSpec = new UniversalSpecification<Tokens>(filter: t => t.RefreshToken == tokenValue && t.IsValid == true);
         var token = await _tokensRepository.FirstOrDefaultAsync(tokenSpec);
@@ -183,9 +183,9 @@ public class AuthService : IAuthService
         return token;
     }
 
-    public async Task<string> getNewAccessTokenAsync(string refreshToken)
+    public async Task<string> GetNewAccessTokenAsync(string refreshToken)
     {
-        var refreshValid = await isValidRefreshToken(refreshToken);
+        var refreshValid = await IsValidRefreshToken(refreshToken);
         if (refreshValid == null)
         {
             throw new AuthorizationErrorException("Token has expired or is invalid");

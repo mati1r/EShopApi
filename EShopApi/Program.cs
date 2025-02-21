@@ -1,13 +1,12 @@
-using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using System.Threading.RateLimiting;
 using System.Security.Claims;
-using Core.IService;
 using Application.JWT;
 using Application.Middlewares;
 using Application.Dependency;
 using Infrastracture.Data;
 using Core;
+using Application.ProgramConfiguration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -50,7 +49,9 @@ if (builder.Environment.IsDevelopment())
     builder.Configuration.AddUserSecrets<Program>();
 }
 
-builder.Services.AddScoped<IAuthService, Core.Services.AuthService>();
+builder.Services.AddCoreServices();
+builder.Services.AddAdminServices();
+builder.Services.AddUserServices();
 builder.Services.AddScoped(typeof(IRepository<>), typeof(EntityFrameworkRepository<>));
 
 builder.Services.AddCustomJwtBearer(builder.Configuration);

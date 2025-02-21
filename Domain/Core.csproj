@@ -14,8 +14,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="IServices\User\" />
+    <Folder Include="Services\User\" />
     <Folder Include="Specifications\Admin\" />
-    <Folder Include="SpecificationTypes\Admin\" />
+    <Folder Include="SpecificationTypes\Admin\Category\" />
   </ItemGroup>
 
 </Project>

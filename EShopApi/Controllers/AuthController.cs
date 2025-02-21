@@ -1,14 +1,14 @@
 ﻿using Application.DTO.AuthDTO;
 using Core.DTO.AuthDTO;
 using Core.Exceptions;
-using Core.IService;
+using Core.IServices;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
 namespace Application.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("Api/[controller]")]
     [ApiController]
     public class AuthController : ControllerBase
     {
@@ -24,7 +24,7 @@ namespace Application.Controllers
         [HttpPost("Register")]
         public async Task<UserDTO> Register([FromBody] RegisterDTO registerDTO)
         {
-            UserDTO userDTO = await _authService.register(registerDTO.email, registerDTO.username, registerDTO.password);
+            UserDTO userDTO = await _authService.Register(registerDTO.email, registerDTO.username, registerDTO.password);
             return userDTO;
         }
 
@@ -32,7 +32,7 @@ namespace Application.Controllers
         [HttpPost("Login")]
         public async Task<UserDTO> Login([FromBody] LoginDTO loginDTO)
         {
-            UserDTO userDTO = await _authService.login(loginDTO.username, loginDTO.password);
+            UserDTO userDTO = await _authService.Login(loginDTO.username, loginDTO.password);
 
             return userDTO;
         }
@@ -41,7 +41,7 @@ namespace Application.Controllers
         [HttpPost("Refresh")]
         public async Task<string> Refresh([FromBody] string refreshToken)
         {
-            string newAccessToken = await _authService.getNewAccessTokenAsync(refreshToken);
+            string newAccessToken = await _authService.GetNewAccessTokenAsync(refreshToken);
             return newAccessToken;
         }
 
@@ -55,7 +55,7 @@ namespace Application.Controllers
                 throw new BadRequestException("Access token was not provided or it was invalid");
             }
             int useIdInt = Int32.Parse(userId);
-            await _authService.logout(useIdInt);
+            await _authService.Logout(useIdInt);
         }
 
         [AllowAnonymous]
