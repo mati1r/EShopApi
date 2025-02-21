@@ -30,6 +30,7 @@
 
   <ItemGroup>
     <Folder Include="Controllers\User\" />
+    <Folder Include="DTO\User\" />
   </ItemGroup>
 
 </Project>

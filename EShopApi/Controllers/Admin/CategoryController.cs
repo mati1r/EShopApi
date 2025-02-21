@@ -1,4 +1,6 @@
-﻿using Core.IServices.Admin;
+﻿using Application.DTO.Admin.Category;
+using Core.IServices.Admin;
+using Core.SpecificationTypes.Admin.Category;
 using EShopApi.Models.EShop;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,9 +12,16 @@ namespace Application.Controllers.Admin
 
         [HttpGet]
         [Route("Category")]
-        public async Task<List<Category>> Category()
+        public async Task<List<CategoryGetListSpecificationType>> GetList()
         {
             return await _categoryService.GetList();
+        }
+
+        [HttpPost]
+        [Route("Category")]
+        public async Task Add([FromBody] CategoryAdd data)
+        {
+            await _categoryService.Add(data.Name);
         }
     }
 }
