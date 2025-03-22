@@ -16,6 +16,8 @@ public static class DependencyInjection
     public static IServiceCollection AddAdminServices(this IServiceCollection services)
     {
         services.AddScoped<ICategoryService, CategoryService>();
+        services.AddScoped<IFilterTypeService, FilterTypeService>();
+        services.AddScoped<IProductTypeService, ProductTypeService>();
 
         return services;
     }
