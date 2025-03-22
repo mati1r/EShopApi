@@ -1,6 +1,4 @@
-﻿using EShopApi.Models.EShop;
-
-namespace Core.Models.EShop;
+﻿namespace Core.Models.EShop;
 
 public class SubcategoryRefProductType(int subcategoryId, int productTypeId)
 {

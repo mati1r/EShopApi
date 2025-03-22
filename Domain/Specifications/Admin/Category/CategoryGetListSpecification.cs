@@ -1,10 +1,9 @@
 ﻿using Ardalis.Specification;
 using Core.SpecificationTypes.Admin.Category;
-using EShopApi.Models.EShop;
 
-namespace Core.Specifications.Admin;
+namespace Core.Specifications.Admin.Category;
 
-public class CategoryGetListSpecification : Specification<Category, CategoryGetListSpecificationType>
+public class CategoryGetListSpecification : Specification<Models.EShop.Category, CategoryGetListSpecificationType>
 {
     public CategoryGetListSpecification()
     {

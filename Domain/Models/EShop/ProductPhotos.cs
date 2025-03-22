@@ -1,4 +1,4 @@
-﻿namespace EShopApi.Models.EShop;
+﻿namespace Core.Models.EShop;
 
 public class ProductPhotos(
     int productId,

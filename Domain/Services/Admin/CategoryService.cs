@@ -1,8 +1,8 @@
 ﻿using Core.Exceptions;
 using Core.IServices.Admin;
-using Core.Specifications.Admin;
+using Core.Models.EShop;
+using Core.Specifications.Admin.Category;
 using Core.SpecificationTypes.Admin.Category;
-using EShopApi.Models.EShop;
 
 namespace Core.Services.Admin;
 

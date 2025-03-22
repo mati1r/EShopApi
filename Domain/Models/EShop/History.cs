@@ -1,4 +1,4 @@
-﻿namespace EShopApi.Models.EShop;
+﻿namespace Core.Models.EShop;
 
 public class History(
     int paymentTypeId,

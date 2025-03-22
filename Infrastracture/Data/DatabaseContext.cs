@@ -1,6 +1,5 @@
 ﻿using Core.Models;
 using Core.Models.EShop;
-using EShopApi.Models.EShop;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastracture.Data

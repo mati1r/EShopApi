@@ -1,5 +1,4 @@
 ﻿using Core.SpecificationTypes.Admin.Category;
-using EShopApi.Models.EShop;
 
 namespace Core.IServices.Admin;
 

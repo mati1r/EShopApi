@@ -1,6 +1,4 @@
-﻿using Core.Models.EShop;
-
-namespace EShopApi.Models.EShop;
+﻿namespace Core.Models.EShop;
 
 public class ProductType(
     string name, 

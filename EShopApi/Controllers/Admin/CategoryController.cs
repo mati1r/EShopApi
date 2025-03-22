@@ -1,41 +1,39 @@
 ﻿using Application.DTO.Admin.Category;
 using Core.IServices.Admin;
 using Core.SpecificationTypes.Admin.Category;
-using EShopApi.Models.EShop;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Application.Controllers.Admin
+namespace Application.Controllers.Admin;
+
+public class CategoryController(ICategoryService categoryService) : AdminController
 {
-    public class CategoryController(ICategoryService categoryService) : AdminController
+    private readonly ICategoryService _categoryService = categoryService;
+
+    [HttpGet]
+    [Route("Category")]
+    public async Task<List<CategoryGetListSpecificationType>> GetList()
     {
-        private readonly ICategoryService _categoryService = categoryService;
+        return await _categoryService.GetList();
+    }
 
-        [HttpGet]
-        [Route("Category")]
-        public async Task<List<CategoryGetListSpecificationType>> GetList()
-        {
-            return await _categoryService.GetList();
-        }
+    [HttpPost]
+    [Route("Category")]
+    public async Task Add([FromBody] CategoryAdd data)
+    {
+        await _categoryService.Add(data.Name);
+    }
 
-        [HttpPost]
-        [Route("Category")]
-        public async Task Add([FromBody] CategoryAdd data)
-        {
-            await _categoryService.Add(data.Name);
-        }
+    [HttpPut]
+    [Route("Category")]
+    public async Task Update([FromBody] CategoryUpdate data)
+    {
+        await _categoryService.Update(data.Id, data.Name);
+    }
 
-        [HttpPut]
-        [Route("Category")]
-        public async Task Update([FromBody] CategoryUpdate data)
-        {
-            await _categoryService.Update(data.Id, data.Name);
-        }
-
-        [HttpDelete]
-        [Route("Category")]
-        public async Task Delete([FromBody] CategoryDelete data)
-        {
-            await _categoryService.Delete(data.Id);
-        }
+    [HttpDelete]
+    [Route("Category")]
+    public async Task Delete([FromBody] CategoryDelete data)
+    {
+        await _categoryService.Delete(data.Id);
     }
 }

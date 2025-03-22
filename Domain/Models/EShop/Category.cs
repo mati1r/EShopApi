@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace EShopApi.Models.EShop;
+namespace Core.Models.EShop;
 
 public class Category(
     string name, 

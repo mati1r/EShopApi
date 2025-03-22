@@ -1,6 +1,4 @@
-﻿using EShopApi.Models.EShop;
-
-namespace Core.Models.EShop;
+﻿namespace Core.Models.EShop;
 
 public class Photos(int productId, string storageFolder, string storageFileName, string fileName, int id = default)
 {
