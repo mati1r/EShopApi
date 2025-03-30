@@ -14,4 +14,10 @@ public class ProductType(
     public ICollection<ProductElement> ProductElements { get; private set; } = [];
     public ICollection<ProductValue> ProductValues { get; private set; } = [];
     public ICollection<SubcategoryRefProductType> SubcategoryRefProductTypes { get; private set; } = [];
+
+    public void Update(string name, int filterTypeId)
+    {
+        Name = name;
+        FilterTypeId = filterTypeId;
+    }
 }
