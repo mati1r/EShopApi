@@ -12,7 +12,14 @@ public class ProductElement(
     public int ProductValueId { get; private set; } = productValueId;
     public int ProductId { get; private set; } = productId;
 
-    public virtual ProductType? ProductType { get; set; }
-    public virtual ProductValue? ProductValue { get; set; }
-    public virtual Product? Product { get; set; }
+    public virtual ProductType ProductType { get; set; }
+    public virtual ProductValue ProductValue { get; set; }
+    public virtual Product Product { get; set; }
+
+    public void Update(int productTypeId, int productValueId, int productId)
+    {
+        ProductTypeId = productTypeId;
+        ProductValueId = productValueId;
+        ProductId = productId;
+    }
 }

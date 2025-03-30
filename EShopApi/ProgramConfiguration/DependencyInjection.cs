@@ -18,6 +18,7 @@ public static class DependencyInjection
         services.AddScoped<ICategoryService, CategoryService>();
         services.AddScoped<IFilterTypeService, FilterTypeService>();
         services.AddScoped<IProductTypeService, ProductTypeService>();
+        services.AddScoped<IProductElementService, ProductElementService>();
 
         return services;
     }
