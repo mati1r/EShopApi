@@ -12,7 +12,7 @@ public class ProductElementController(IProductElementService productElementServi
 
     [HttpGet]
     [Route("ProductElement")]
-    public async Task<List<ProductElementGetListSpecificationType>> GetList(ProductElementGetList data)
+    public async Task<List<ProductElementGetListSpecificationType>> GetList([FromQuery] ProductElementGetList data)
     {
         return await _productElementService.GetList(data.ProductId);
     }

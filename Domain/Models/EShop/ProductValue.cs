@@ -13,4 +13,10 @@ public class ProductValue(
     public virtual ProductType? ProductType { get; set; }
 
     public ICollection<ProductElement> ProductElements { get; private set; } = [];
+
+    public void Update(string name, int productTypeId)
+    {
+        Name = name;
+        ProductTypeId = productTypeId;
+    }
 }
