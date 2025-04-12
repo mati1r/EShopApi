@@ -1,6 +1,4 @@
-﻿using Core.Models.EShop;
-
-namespace Core.Models.EShop;
+﻿namespace Core.Models.EShop;
 
 public class Product(
     int subcategoryId,
