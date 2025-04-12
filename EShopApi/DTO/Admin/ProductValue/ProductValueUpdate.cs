@@ -7,6 +7,9 @@ public class ProductValueUpdate
     [Range(1, int.MaxValue)]
     public int Id { get; set; }
 
+    [Range(0, int.MaxValue)]
+    public int? Value { get; set; }
+
     [MaxLength(200)]
     public string Name { get; set; }
 

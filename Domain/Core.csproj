@@ -14,8 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="IServices\User\" />
-    <Folder Include="Services\User\" />
+    <Folder Include="SpecificationTypes\User\ProductElement\" />
   </ItemGroup>
 
 </Project>

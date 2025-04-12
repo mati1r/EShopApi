@@ -2,6 +2,7 @@
 
 public class Product(
     int subcategoryId,
+    string name,
     double price, 
     int quantity,
     bool hidden = false,
@@ -15,6 +16,7 @@ public class Product(
 {
     public int Id { get; private set; } = id;
     public int SubcategoryId { get; private set; } = subcategoryId;
+    public string Name { get; private set; } = name;
     public string? Description1 { get; private set; } = description1;
     public string? Description2 { get; private set; } = description2;
     public string? Description3 { get; private set; } = description3;

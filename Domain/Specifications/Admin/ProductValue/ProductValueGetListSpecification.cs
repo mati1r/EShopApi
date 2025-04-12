@@ -11,7 +11,8 @@ public class ProductValueGetListSpecification : Specification<Models.EShop.Produ
             .Select(pv => new ProductValueGetListSpecificationType
             {
                 Id = pv.Id,
-                Name = pv.Name
+                Name = pv.Name,
+                Value = pv.Value,
             })
             .Where(pv => pv.ProductTypeId == productTypeId)
             .AsTracking();

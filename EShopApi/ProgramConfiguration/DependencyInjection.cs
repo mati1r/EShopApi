@@ -1,6 +1,4 @@
 ﻿using Core.IServices;
-using Core.IServices.Admin;
-using Core.Services.Admin;
 
 namespace Application.ProgramConfiguration;
 
@@ -15,18 +13,19 @@ public static class DependencyInjection
 
     public static IServiceCollection AddAdminServices(this IServiceCollection services)
     {
-        services.AddScoped<ICategoryService, CategoryService>();
-        services.AddScoped<IFilterTypeService, FilterTypeService>();
-        services.AddScoped<IProductTypeService, ProductTypeService>();
-        services.AddScoped<IProductElementService, ProductElementService>();
-        services.AddScoped<IProductValueService, ProductValueService>();
-        services.AddScoped<IProductService, ProductService>();
+        services.AddScoped<Core.IServices.Admin.ICategoryService, Core.Services.Admin.CategoryService>();
+        services.AddScoped<Core.IServices.Admin.IFilterTypeService, Core.Services.Admin.FilterTypeService>();
+        services.AddScoped<Core.IServices.Admin.IProductTypeService, Core.Services.Admin.ProductTypeService>();
+        services.AddScoped<Core.IServices.Admin.IProductElementService, Core.Services.Admin.ProductElementService>();
+        services.AddScoped<Core.IServices.Admin.IProductValueService, Core.Services.Admin.ProductValueService>();
+        services.AddScoped<Core.IServices.Admin.IProductService, Core.Services.Admin.ProductService>();
 
         return services;
     }
 
     public static IServiceCollection AddUserServices(this IServiceCollection services)
     {
+        services.AddScoped<Core.IServices.User.IProductService, Core.Services.User.ProductService>();
 
         return services;
     }

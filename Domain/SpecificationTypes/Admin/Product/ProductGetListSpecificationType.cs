@@ -1,8 +1,8 @@
 ﻿using Core.SpecificationTypes.Admin.ProductElement;
 
-namespace Core.Specifications.Admin.Product;
+namespace Core.SpecificationTypes.Admin.Product;
 
-public class ProductGetListSpecification
+public class ProductGetListSpecificationType
 {
     public int Id { get; set; }
     public int SubcategoryId { get; set; }

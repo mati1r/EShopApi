@@ -1,5 +1,5 @@
 ﻿using Ardalis.Specification;
-using Core.SpecificationTypes.Common;
+using Core.SpecificationTypes.Core;
 
 namespace Core.Specifications.Admin.FilterType;
 

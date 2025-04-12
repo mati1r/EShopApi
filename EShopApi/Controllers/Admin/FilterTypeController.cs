@@ -1,6 +1,6 @@
 ﻿using Application.DTO.Admin.FilterType;
 using Core.IServices.Admin;
-using Core.SpecificationTypes.Common;
+using Core.SpecificationTypes.Core;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Application.Controllers.Admin;

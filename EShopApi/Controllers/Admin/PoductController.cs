@@ -1,6 +1,6 @@
 ﻿using Application.DTO.Admin.Product;
 using Core.IServices.Admin;
-using Core.Specifications.Admin.Product;
+using Core.SpecificationTypes.Admin.Product;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Application.Controllers.Admin;
@@ -11,7 +11,7 @@ public class PoductController(IProductService productService) : AdminController
 
     [HttpGet]
     [Route("Product")]
-    public async Task<List<ProductGetListSpecification>> GetList()
+    public async Task<List<ProductGetListSpecificationType>> GetList()
     {
         return await _productService.GetList();
     }

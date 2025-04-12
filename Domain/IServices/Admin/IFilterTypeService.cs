@@ -1,4 +1,4 @@
-﻿using Core.SpecificationTypes.Common;
+﻿using Core.SpecificationTypes.Core;
 
 namespace Core.IServices.Admin;
 

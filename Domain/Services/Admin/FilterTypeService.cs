@@ -2,7 +2,7 @@
 using Core.IServices.Admin;
 using Core.Models.EShop;
 using Core.Specifications.Admin.FilterType;
-using Core.SpecificationTypes.Common;
+using Core.SpecificationTypes.Core;
 
 namespace Core.Services.Admin;
 

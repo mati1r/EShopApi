@@ -1,11 +1,11 @@
 ﻿using Core.IServices.Admin;
-using Core.Specifications.Admin.Product;
+using Core.SpecificationTypes.Admin.Product;
 
 namespace Core.Services.Admin;
 
 public class ProductService : IProductService
 {
-    public Task<List<ProductGetListSpecification>> GetList()
+    public Task<List<ProductGetListSpecificationType>> GetList()
     {
         throw new NotImplementedException();
     }

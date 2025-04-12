@@ -24,11 +24,11 @@ public class ProductValueService(
         return await _productValueRepository.ListAsync(productValueListSpec);
     }
 
-    public async Task Add(string name, int productTypeId)
+    public async Task Add(string name, int? value, int productTypeId)
     {
         var productType = await _productTypeRepository.GetByIdAsync(productTypeId) ?? throw new BadRequestException($"Could not found product type with id {productTypeId}");
 
-        var productValue = new ProductValue(productTypeId, name);
+        var productValue = new ProductValue(productTypeId, name, value);
         await _productValueRepository.AddAsync(productValue);
     }
 
@@ -44,17 +44,17 @@ public class ProductValueService(
 
         foreach (var productValueData in data)
         {
-            var productValue = new ProductValue(productValueData.ProductTypeId, productValueData.Name);
+            var productValue = new ProductValue(productValueData.ProductTypeId, productValueData.Name, productValueData.Value);
             productValues.Add(productValue);
         }
 
         await _productValueRepository.AddRangeAsync(productValues);
     }
 
-    public async Task Update(int id, string name, int productTypeId)
+    public async Task Update(int id, string name, int? value, int productTypeId)
     {
         var productValue = await _productValueRepository.GetByIdAsync(id) ?? throw new BadRequestException($"Could not found product value with id {id}");
-        productValue.Update(name, productTypeId);
+        productValue.Update(name, value, productTypeId);
         await _productValueRepository.UpdateAsync(productValue);
     }
 

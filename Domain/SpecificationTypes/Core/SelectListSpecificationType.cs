@@ -1,4 +1,4 @@
-﻿namespace Core.SpecificationTypes.Common;
+﻿namespace Core.SpecificationTypes.Core;
 
 public class SelectListSpecificationType
 {

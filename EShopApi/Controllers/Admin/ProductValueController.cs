@@ -21,7 +21,7 @@ public class ProductValueController(IProductValueService productValueService) : 
     [Route("ProductValue")]
     public async Task Add([FromBody] ProductValueAdd data)
     {
-        await _productValueService.Add(data.Name, data.ProductTypeId);
+        await _productValueService.Add(data.Name, data.Value, data.ProductTypeId);
     }
 
     [HttpPost]
@@ -35,7 +35,7 @@ public class ProductValueController(IProductValueService productValueService) : 
     [Route("ProductValue")]
     public async Task Update([FromBody] ProductValueUpdate data)
     {
-        await _productValueService.Update(data.Id, data.Name, data.ProductTypeId);
+        await _productValueService.Update(data.Id, data.Name, data.Value, data.ProductTypeId);
     }
 
     [HttpDelete]
