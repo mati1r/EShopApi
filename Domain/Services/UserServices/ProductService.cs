@@ -5,7 +5,7 @@ using Core.Specifications.User;
 using Core.SpecificationTypes.Core;
 using Core.SpecificationTypes.User.Product;
 
-namespace Core.Services.User;
+namespace Core.Services.UserServices;
 
 public class ProductService(IRepository<Product> productRepository) : IProductService
 {
