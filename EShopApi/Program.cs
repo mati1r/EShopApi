@@ -10,12 +10,14 @@ using Application.ProgramConfiguration;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Add services to the container.  
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(swagger =>
+builder.Services.AddSwaggerGen(static swagger =>
 {
-    swagger.SwaggerDoc("v1", new OpenApiInfo { Title = "ApiTemplate", Version =  "v1" });
+    swagger.SwaggerDoc("admin", new OpenApiInfo { Title = "Admin API", Version = "v1" });
+    swagger.SwaggerDoc("user", new OpenApiInfo { Title = "User API", Version = "v1" });
+
     swagger.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         Name = "Authorization",
@@ -27,19 +29,28 @@ builder.Services.AddSwaggerGen(swagger =>
     });
 
     swagger.AddSecurityRequirement(new OpenApiSecurityRequirement
-    {
-        {
-            new OpenApiSecurityScheme
-            {
-                Reference = new OpenApiReference
-                {
-                    Type=ReferenceType.SecurityScheme,
-                    Id="Bearer"
-                }
-            },
-            new string[]{}
-        }
-    });
+   {
+       {
+           new OpenApiSecurityScheme
+           {
+               Reference = new OpenApiReference
+               {
+                   Type = ReferenceType.SecurityScheme,
+                   Id = "Bearer"
+               }
+           },
+           Array.Empty<string>()
+       }
+   });
+
+    //swagger.DocInclusionPredicate((docName, apiDesc) =>
+    //{
+    //    if (docName == "admin")
+    //        return apiDesc.GroupName == "Admin";
+    //    if (docName == "user")
+    //        return apiDesc.GroupName == "User";
+    //    return false;
+    //});
 });
 
 builder.Services.AddProjects(builder.Configuration);
@@ -58,7 +69,7 @@ builder.Services.AddCustomJwtBearer(builder.Configuration);
 
 builder.Services.AddRateLimiter(r =>
 {
-    // Konfiguracja globalnego limitera dla wszystkich u¿ytkowników
+    // Konfiguracja globalnego limitera dla wszystkich u¿ytkowników  
     r.GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(context =>
     {
         var userId = context.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value ?? "anonymous";
@@ -75,11 +86,15 @@ var app = builder.Build();
 
 app.UseMiddleware<ErrorHandlingMiddleware>();
 
-// Configure the HTTP request pipeline.
+// Configure the HTTP request pipeline.  
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/admin/swagger.json", "Admin API v1");
+        c.SwaggerEndpoint("/swagger/user/swagger.json", "User API v1");
+    });
 }
 
 app.UseRateLimiter();
