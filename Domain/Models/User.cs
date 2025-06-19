@@ -13,6 +13,8 @@ public class User
 
     public string[] Roles { get; set; } = [];
 
+    public int? AddressId { get; set; } = null;
+
     public ICollection<Tokens> Tokens { get; set; } = [];
     public ICollection<History> Histories { get; set; } = [];
 }

@@ -42,15 +42,6 @@ builder.Services.AddSwaggerGen(static swagger =>
            Array.Empty<string>()
        }
    });
-
-    //swagger.DocInclusionPredicate((docName, apiDesc) =>
-    //{
-    //    if (docName == "admin")
-    //        return apiDesc.GroupName == "Admin";
-    //    if (docName == "user")
-    //        return apiDesc.GroupName == "User";
-    //    return false;
-    //});
 });
 
 builder.Services.AddProjects(builder.Configuration);
@@ -69,7 +60,7 @@ builder.Services.AddCustomJwtBearer(builder.Configuration);
 
 builder.Services.AddRateLimiter(r =>
 {
-    // Konfiguracja globalnego limitera dla wszystkich u¿ytkowników  
+    // Globlal rate limiter configuration
     r.GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(context =>
     {
         var userId = context.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value ?? "anonymous";
