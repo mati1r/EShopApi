@@ -25,7 +25,7 @@ public class ProductTypeService(
 
     public async Task Add(string name, int filterTypeId)
     {
-        var filterTypee = await _filterTypeRepository.GetByIdAsync(filterTypeId) ?? throw new BadRequestException($"Could not found filter type with id {filterTypeId}"); ;
+        _ = await _filterTypeRepository.GetByIdAsync(filterTypeId) ?? throw new BadRequestException($"Could not found filter type with id {filterTypeId}"); ;
         var productType = new ProductType(name, filterTypeId);
         await _productTypeRepository.AddAsync(productType);
     }

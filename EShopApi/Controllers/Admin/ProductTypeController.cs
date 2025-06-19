@@ -1,7 +1,5 @@
-﻿using Application.DTO.Admin.Category;
-using Application.DTO.Admin.ProductType;
+﻿using Application.DTO.Admin.ProductType;
 using Core.IServices.Admin;
-using Core.SpecificationTypes.Admin.Category;
 using Core.SpecificationTypes.Admin.ProductType;
 using Microsoft.AspNetCore.Mvc;
 

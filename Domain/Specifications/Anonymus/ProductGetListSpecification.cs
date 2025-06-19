@@ -3,7 +3,7 @@ using Ardalis.Specification;
 using Core.DTO.Core;
 using Core.Enums;
 using Core.Models.EShop;
-using Core.SpecificationTypes.Anonymus.Product;
+using Core.SpecificationTypes.Core;
 
 namespace Core.Specifications.Anonymus;
 

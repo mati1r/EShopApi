@@ -1,4 +1,4 @@
-﻿namespace Core.SpecificationTypes.Anonymus.Product;
+﻿namespace Core.SpecificationTypes.Core;
 
 public class ProductGetListSpecificationType
 {

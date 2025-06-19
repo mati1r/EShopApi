@@ -2,7 +2,6 @@
 using Core.IServices.Anonymus;
 using Core.Models.EShop;
 using Core.Specifications.Anonymus;
-using Core.SpecificationTypes.Anonymus.Product;
 using Core.SpecificationTypes.Core;
 
 namespace Core.Services.Anonymus;

@@ -1,5 +1,4 @@
 ﻿using Core.DTO.Core;
-using Core.SpecificationTypes.Anonymus.Product;
 using Core.SpecificationTypes.Core;
 
 namespace Core.IServices.Anonymus;

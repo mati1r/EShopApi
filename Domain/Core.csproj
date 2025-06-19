@@ -17,7 +17,9 @@
     <Folder Include="IServices\User\" />
     <Folder Include="Services\UserServices\" />
     <Folder Include="Specifications\User\" />
+    <Folder Include="SpecificationTypes\Admin\Product\" />
     <Folder Include="SpecificationTypes\Anonymus\ProductElement\" />
+    <Folder Include="SpecificationTypes\Anonymus\Product\" />
     <Folder Include="SpecificationTypes\User\" />
   </ItemGroup>
 

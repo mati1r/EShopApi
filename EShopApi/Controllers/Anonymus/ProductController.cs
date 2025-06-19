@@ -1,6 +1,5 @@
 ﻿using Application.DTO.User;
 using Core.IServices.Anonymus;
-using Core.SpecificationTypes.Anonymus.Product;
 using Core.SpecificationTypes.Core;
 using Microsoft.AspNetCore.Mvc;
 
