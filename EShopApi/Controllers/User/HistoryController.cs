@@ -17,7 +17,6 @@ public class HistoryController(IHistoryService historyService) : UserController
         if (CurrentUserId is null)
             throw new AppErrorException("Could not get currently loged in user");
 
-        //return Ok(new { userId = CurrentUserId });
         return await _historyService.GetList(
             (int)CurrentUserId,
             data.Pagination,
