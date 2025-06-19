@@ -53,6 +53,7 @@ if (builder.Environment.IsDevelopment())
 
 builder.Services.AddCoreServices();
 builder.Services.AddAdminServices();
+builder.Services.AddAnonymusServices();
 builder.Services.AddUserServices();
 builder.Services.AddScoped(typeof(IRepository<>), typeof(EntityFrameworkRepository<>));
 

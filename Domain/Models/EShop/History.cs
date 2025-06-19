@@ -13,6 +13,7 @@ public class History(
     public double SumPrice { get; private set; } = sumPrice;
     public int AddressId { get; private set; } = addressId;
     public int? UserId { get; private set; } = userId;
+    public DateTime CreatedAt { get; private set; } = DateTime.UtcNow;
 
     public virtual PaymentType PaymentType { get; set; }
     public virtual Address Address { get; set; }

@@ -16,6 +16,6 @@ public class ProductRefHistory(
     public bool Discount { get; private set; } = discount;
     public int? DiscountPrecentage { get; private set; } = discountPrecentage;
 
-    public virtual Product? Product { get; set; }
-    public virtual History? History { get; set; }
+    public virtual Product Product { get; set; }
+    public virtual History History { get; set; }
 }

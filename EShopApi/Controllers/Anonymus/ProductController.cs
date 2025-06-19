@@ -1,4 +1,4 @@
-﻿using Application.DTO.User;
+﻿using Application.DTO.Anonymus;
 using Core.IServices.Anonymus;
 using Core.SpecificationTypes.Core;
 using Microsoft.AspNetCore.Mvc;

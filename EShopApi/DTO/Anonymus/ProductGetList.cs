@@ -1,6 +1,6 @@
 ﻿using Core.DTO.Core;
 
-namespace Application.DTO.User;
+namespace Application.DTO.Anonymus;
 
 public class ProductGetList
 {
