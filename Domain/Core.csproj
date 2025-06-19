@@ -14,7 +14,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="SpecificationTypes\User\ProductElement\" />
+    <Folder Include="IServices\User\" />
+    <Folder Include="Services\UserServices\" />
+    <Folder Include="Specifications\User\" />
+    <Folder Include="SpecificationTypes\Anonymus\ProductElement\" />
+    <Folder Include="SpecificationTypes\User\" />
   </ItemGroup>
 
 </Project>

@@ -1,4 +1,4 @@
-﻿namespace Core.SpecificationTypes.User.Product;
+﻿namespace Core.SpecificationTypes.Anonymus.Product;
 
 public class ProductElementListSpecificationType
 {

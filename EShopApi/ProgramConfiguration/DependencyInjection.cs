@@ -1,4 +1,6 @@
 ﻿using Core.IServices;
+using Core.IServices.Anonymus;
+using Core.Services.Anonymus;
 
 namespace Application.ProgramConfiguration;
 
@@ -25,7 +27,7 @@ public static class DependencyInjection
 
     public static IServiceCollection AddUserServices(this IServiceCollection services)
     {
-        services.AddScoped<Core.IServices.User.IProductService, Core.Services.UserServices.ProductService>();
+        services.AddScoped<IProductService, ProductService>();
 
         return services;
     }
