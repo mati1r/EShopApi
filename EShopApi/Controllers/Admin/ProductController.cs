@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Application.Controllers.Admin;
 
-public class PoductController(IProductService productService) : AdminController
+public class ProductController(IProductService productService) : AdminController
 {
     private readonly IProductService _productService = productService;
 
