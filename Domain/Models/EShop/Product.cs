@@ -26,7 +26,7 @@ public class Product(
     public int Quantity { get; private set; } = quantity;
     public bool Hidden { get; private set; } = hidden;
 
-    public virtual Subcategory? Subcategory { get; set; }
+    public virtual Subcategory Subcategory { get; set; }
 
     public ICollection<ProductElement> ProductElements { get; private set; } = [];
     public ICollection<ProductPhotos> ProductPhotos { get; private set; } = [];

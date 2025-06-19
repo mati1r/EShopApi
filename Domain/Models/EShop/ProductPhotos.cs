@@ -10,5 +10,5 @@ public class ProductPhotos(
     public int ProductId { get; private set; } = productId;
     public string Photo { get; private set; } = photo;
 
-    public virtual Product? Product { get; set; }
+    public virtual Product Product { get; set; }
 }

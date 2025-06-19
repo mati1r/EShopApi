@@ -12,7 +12,7 @@ public class ProductValue(
     public string Name { get; private set; } = name;
     public int? Value { get; private set; } = value;
 
-    public virtual ProductType? ProductType { get; set; }
+    public virtual ProductType ProductType { get; set; }
 
     public ICollection<ProductElement> ProductElements { get; private set; } = [];
 

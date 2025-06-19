@@ -12,7 +12,7 @@ public class Subcategory(
     public int CategoryId { get; private set; } = categoryId;
     public string Name { get; private set; } = name;
 
-    public virtual Category? Category { get; set; }
+    public virtual Category Category { get; set; }
 
     public ICollection<Product> Products { get; private set; } = [];
     public ICollection<SubcategoryRefProductType> SubcategoryRefProductTypes { get; private set; } = [];

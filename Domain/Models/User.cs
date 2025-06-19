@@ -1,4 +1,6 @@
-﻿namespace Core.Models;
+﻿using Core.Models.EShop;
+
+namespace Core.Models;
 
 public class User
 {
@@ -12,4 +14,5 @@ public class User
     public string[] Roles { get; set; } = [];
 
     public ICollection<Tokens> Tokens { get; set; } = [];
+    public ICollection<History> Histories { get; set; } = [];
 }

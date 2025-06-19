@@ -8,5 +8,5 @@ public class Photos(int productId, string storageFolder, string storageFileName,
     public string StorageFileName { get; private set; } = storageFileName;
     public string FileName { get; private set; } = fileName;
 
-    public virtual Product? Product { get; set; }
+    public virtual Product Product { get; set; }
 }
