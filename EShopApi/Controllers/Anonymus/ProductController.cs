@@ -1,4 +1,5 @@
 ﻿using Application.DTO.Anonymus;
+using Application.Helpers;
 using Core.DTO.Core;
 using Core.IServices.Anonymus;
 using Core.IServices.Infrastructure;
@@ -23,15 +24,7 @@ public class ProductController(IProductService productService, IStorageService s
     [Route("FileUploadTest")]
     public async Task FileUploadTest([FromForm] FileUploadTest data)
     {
-        var file = new FileModel();
-
-        using(var stream = new MemoryStream())
-        {
-            await data.File.CopyToAsync(stream);
-            file.Content = stream.ToArray();
-            file.FileExtension = Path.GetExtension(data.File.FileName);
-            file.FileName = Path.GetFileNameWithoutExtension(data.File.FileName);
-        }
+        var file = await FileHelper.ConvertIFormFileToFileModelAsync(data.File);
 
         await _storageService.Upload(data.FilePath, file.Content);
     }
