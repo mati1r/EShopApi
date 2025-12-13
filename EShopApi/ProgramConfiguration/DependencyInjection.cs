@@ -1,8 +1,10 @@
-﻿using Core.IServices;
+﻿using Core;
+using Core.IServices;
 using Core.IServices.Anonymus;
 using Core.IServices.User;
 using Core.Services.Anonymus;
 using Core.Services.UserServices;
+using Infrastracture.Data;
 
 namespace Application.ProgramConfiguration;
 
@@ -11,6 +13,7 @@ public static class DependencyInjection
     public static IServiceCollection AddCoreServices(this IServiceCollection services)
     {
         services.AddScoped<IAuthService, Core.Services.AuthService>();
+        services.AddScoped(typeof(IRepository<>), typeof(EntityFrameworkRepository<>));
 
         return services;
     }

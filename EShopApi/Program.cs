@@ -4,8 +4,6 @@ using System.Security.Claims;
 using Application.JWT;
 using Application.Middlewares;
 using Application.Dependency;
-using Infrastracture.Data;
-using Core;
 using Application.ProgramConfiguration;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -55,7 +53,7 @@ builder.Services.AddCoreServices();
 builder.Services.AddAdminServices();
 builder.Services.AddAnonymusServices();
 builder.Services.AddUserServices();
-builder.Services.AddScoped(typeof(IRepository<>), typeof(EntityFrameworkRepository<>));
+builder.Services.AddConfigurations(builder.Configuration);
 
 builder.Services.AddCustomJwtBearer(builder.Configuration);
 

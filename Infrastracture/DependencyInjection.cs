@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Core.IServices.Infrastructure;
 using Infrastracture.Data;
+using Infrastracture.Storage;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,6 +13,8 @@ public static class DependencyInjection
     {
         services.AddDbContext<DatabaseContext>(options =>
             options.UseMySql(configuration.GetConnectionString("DefaultConnection"), ServerVersion.AutoDetect(configuration.GetConnectionString("DefaultConnection"))), ServiceLifetime.Scoped);
+
+        services.AddScoped<IStorageService, StorageService>();
 
         return services;
     }
