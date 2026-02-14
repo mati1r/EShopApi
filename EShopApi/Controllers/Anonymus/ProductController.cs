@@ -13,6 +13,6 @@ public class ProductController(IProductService productService) : AnonymusControl
     [Route("GetList")]
     public async Task<SpecificationListAggregation<ProductGetListSpecificationType>> GetList([FromBody] ProductGetList data)
     {
-        return await _productService.GetList(data.SubCategoryId, data.Pagination, data.Filters, data.OrderBy);
+        return await _productService.GetList(data.SubCategoryId, data.Pagination, data.Filters, data.OrderBy, data.Deleted);
     }
 }

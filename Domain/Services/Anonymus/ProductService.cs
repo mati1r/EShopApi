@@ -10,9 +10,9 @@ public class ProductService(IRepository<Product> productRepository) : IProductSe
 {
     private readonly IRepository<Product> _productRepository = productRepository;
 
-    public async Task<SpecificationListAggregation<ProductGetListSpecificationType>> GetList(int subCategoryId, AppPaginationList pagination, List<AppFilters>? filters, AppOrderBy orderBy)
+    public async Task<SpecificationListAggregation<ProductGetListSpecificationType>> GetList(int subCategoryId, AppPaginationList pagination, List<AppFilters>? filters, AppOrderBy orderBy, bool deleted)
     {
-        var productListSpec = new ProductGetListSpecification(subCategoryId, filters, orderBy);
+        var productListSpec = new ProductGetListSpecification(subCategoryId, filters, orderBy, deleted);
         return await _productRepository.AppListAsync(productListSpec, pagination.PerPage, pagination.Page);
     }
 }
