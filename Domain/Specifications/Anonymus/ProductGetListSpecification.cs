@@ -26,8 +26,8 @@ public class ProductGetListSpecification : Specification<Product, ProductGetList
                 Name = p.Name,
                 Price = p.Price,
                 Quantity = p.Quantity,
-                Description1 = p.Description1,
-                DescriptionPhoto = null,
+                Descriptions = p.ProductDescriptions.Select(pd => pd.Description).ToList(),
+                ProductPhotosName = p.ProductPhotos.Select(pp => pp.GeneratedName).ToList(),
                 ProductElements = p.ProductElements
                     .Select(pe => new ProductElementListSpecificationType
                     {

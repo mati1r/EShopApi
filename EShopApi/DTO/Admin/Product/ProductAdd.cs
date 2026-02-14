@@ -1,14 +1,15 @@
-﻿namespace Application.DTO.Admin.Product;
+﻿using Application.Helpers.Attributes;
+
+namespace Application.DTO.Admin.Product;
 
 public class ProductAdd
 {
     public int SubcategoryId { get; set; }
     public string Name { get; set; }
-    public string? Description1 { get; set; }
-    public string? Description2 { get; set; }
-    public string? Description3 { get; set; }
+    public List<string> Descriptions { get; set; } = [];
+
+    [FileSize(5 * 1024 * 1024)]
+    public List<IFormFile> Photos { get; set; } = [];
     public double Price { get; set; }
-    public string? DescriptionPhoto1 { get; set; }
-    public string? DescriptionPhoto2 { get; set; }
     public int Quantity { get; set; }
 }

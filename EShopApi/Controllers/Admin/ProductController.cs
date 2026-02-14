@@ -1,5 +1,7 @@
 ﻿using Application.DTO.Admin;
 using Application.DTO.Admin.Product;
+using Application.Helpers;
+using Core.DTO.Core;
 using Core.IServices.Admin;
 using Core.SpecificationTypes.Core;
 using Microsoft.AspNetCore.Mvc;
@@ -19,17 +21,22 @@ public class ProductController(IProductService productService) : AdminController
 
     [HttpPost]
     [Route("Product")]
-    public async Task Add([FromBody] ProductAdd data)
+    public async Task Add([FromForm] ProductAdd data)
     {
+        List<FileModel> files = [];
+
+        foreach (var photo in data.Photos)
+        {
+            var file = await FileHelper.ConvertIFormFileToFileModelAsync(photo);
+            files.Add(file);
+        }
+
         await _productService.Add(
             data.SubcategoryId, 
             data.Name,
-            data.Description1, 
-            data.Description2, 
-            data.Description3, 
+            data.Descriptions,
             data.Price, 
-            data.DescriptionPhoto1, 
-            data.DescriptionPhoto2, 
+            files,
             data.Quantity
         );
     }
@@ -42,12 +49,7 @@ public class ProductController(IProductService productService) : AdminController
             data.Id, 
             data.SubcategoryId, 
             data.Name,
-            data.Description1, 
-            data.Description2, 
-            data.Description3, 
             data.Price, 
-            data.DescriptionPhoto1, 
-            data.DescriptionPhoto2, 
             data.Quantity
         );
     }

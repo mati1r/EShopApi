@@ -53,7 +53,32 @@ public class StorageService : IStorageService
         await _client.PutObjectAsync(request);
     }
 
-    public Task<string> DownloadBase64() {
-        throw new NotImplementedException();
+    public async Task<string> DownloadBase64(string filePath, CancellationToken cancellationToken = default) {
+        var request = new GetObjectRequest
+        {
+            BucketName = _bucketName,
+            Key = filePath,
+        };
+
+        using var response = await _client.GetObjectAsync(request, cancellationToken);
+        using var responseStream = response.ResponseStream;
+        using var memoryStream = new MemoryStream();
+        await responseStream.CopyToAsync(memoryStream);
+        return Convert.ToBase64String(memoryStream.ToArray());
+    }
+
+    public async Task<byte[]> DownloadBytes(string filePath, CancellationToken cancellationToken = default)
+    {
+        var request = new GetObjectRequest
+        {
+            BucketName = _bucketName,
+            Key = filePath,
+        };
+
+        using var response = await _client.GetObjectAsync(request, cancellationToken);
+        using var responseStream = response.ResponseStream;
+        using var memoryStream = new MemoryStream();
+        await responseStream.CopyToAsync(memoryStream);
+        return memoryStream.ToArray();
     }
 }

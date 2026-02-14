@@ -4,5 +4,6 @@ public interface IStorageService
 {
     public Task Upload(string filePath, string contentBody);
     public Task Upload(string filePath, byte[] byteArray);
-    public Task<string> DownloadBase64();
+    public Task<string> DownloadBase64(string filePath, CancellationToken cancellationToken = default);
+    public Task<byte[]> DownloadBytes(string filePath, CancellationToken cancellationToken = default);
 }

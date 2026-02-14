@@ -18,6 +18,7 @@ namespace Infrastracture.Data
         public DbSet<ProductRefHistory> ProductRefHistory { get; set; }
         public DbSet<History> History { get; set; }
         public DbSet<PaymentType> PaymentTypes { get; set; }
+        public DbSet<ProductDescriptions> ProductDescriptions { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
