@@ -9,13 +9,13 @@ namespace Core.Specifications.Anonymus;
 
 public class ProductGetListSpecification : Specification<Product, ProductGetListSpecificationType>
 {
-    public ProductGetListSpecification(int subcategoryId, List<AppFilters>? filters, AppOrderBy orderBy)
+    public ProductGetListSpecification(int subcategoryId, List<AppFilters>? filters, AppOrderBy orderBy, bool deleted)
     {
         Expression<Func<Product, object?>> orderByExpression = orderBy.OrderBy switch
         {
-            OrderByEnum.Name => p => p.Name,
-            OrderByEnum.Price => p => p.Price,
-            OrderByEnum.Quantity => p => p.Quantity,
+            (int)ProductOrderByEnum.Name => p => p.Name,
+            (int)ProductOrderByEnum.Price => p => p.Price,
+            (int)ProductOrderByEnum.Quantity => p => p.Quantity,
             _ => p => p.Id
         };
 
@@ -26,8 +26,8 @@ public class ProductGetListSpecification : Specification<Product, ProductGetList
                 Name = p.Name,
                 Price = p.Price,
                 Quantity = p.Quantity,
-                Descriptions = p.ProductDescriptions.Select(pd => pd.Description).ToList(),
-                ProductPhotosName = p.ProductPhotos.Select(pp => pp.GeneratedName).ToList(),
+                Descriptions = p.ProductDescriptions.Where(pd => pd.Deleted == false).Select(pd => pd.Description).ToList(),
+                ProductPhotosName = p.ProductPhotos.Where(pp => pp.Deleted == false).Select(pp => pp.GeneratedName).ToList(),
                 ProductElements = p.ProductElements
                     .Select(pe => new ProductElementListSpecificationType
                     {
@@ -40,7 +40,7 @@ public class ProductGetListSpecification : Specification<Product, ProductGetList
                         ProductTypeFilterName = pe.ProductType.Name
                     })
                     .ToList()
-            }).Where(p => p.SubcategoryId == subcategoryId && !p.Hidden);
+            }).Where(p => p.SubcategoryId == subcategoryId && p.Deleted == deleted);
 
         if (filters != null)
         {

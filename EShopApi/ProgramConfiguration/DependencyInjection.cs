@@ -26,6 +26,8 @@ public static class DependencyInjection
         services.AddScoped<Core.IServices.Admin.IProductElementService, Core.Services.Admin.ProductElementService>();
         services.AddScoped<Core.IServices.Admin.IProductValueService, Core.Services.Admin.ProductValueService>();
         services.AddScoped<Core.IServices.Admin.IProductService, Core.Services.Admin.ProductService>();
+        services.AddScoped<Core.IServices.Admin.IProductPhotosService, Core.Services.Admin.ProductPhotosService>();
+        services.AddScoped<Core.IServices.Admin.IProductDescriptionService, Core.Services.Admin.ProductDescriptionService>();
 
         return services;
     }

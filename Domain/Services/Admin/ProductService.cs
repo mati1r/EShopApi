@@ -1,5 +1,4 @@
-﻿using System.Xml.Linq;
-using Core.DTO.Core;
+﻿using Core.DTO.Core;
 using Core.Exceptions;
 using Core.IServices.Admin;
 using Core.IServices.Infrastructure;
@@ -24,10 +23,11 @@ public class ProductService(
         int subCategoryId, 
         AppPaginationList pagination, 
         List<AppFilters>? filters, 
-        AppOrderBy orderBy
+        AppOrderBy orderBy,
+        bool deleted
     )
     {
-        var productListSpec = new ProductGetListSpecification(subCategoryId, filters, orderBy);
+        var productListSpec = new ProductGetListSpecification(subCategoryId, filters, orderBy, deleted);
         var data = await _productRepository.AppListAsync(productListSpec, pagination.PerPage, pagination.Page);
 
         foreach (var product in data.list)
@@ -87,8 +87,6 @@ public class ProductService(
             _productRepository.RollbackTransaction();
             throw;
         }
-
-        //Photos should be files that are going to be uploaded to S3 storage, but for now they are not there
     }
     public async Task Update(
         int id,
@@ -111,7 +109,7 @@ public class ProductService(
     public async Task Delete(int id)
     {
         var product = await _productRepository.GetByIdAsync(id) ?? throw new BadRequestException($"Could not found product with id {id}");
-        product.Delete();
+        product.Remove();
         await _productRepository.SaveChangesAsync();
     }
 

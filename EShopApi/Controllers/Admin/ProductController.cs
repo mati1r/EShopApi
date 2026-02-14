@@ -12,11 +12,11 @@ public class ProductController(IProductService productService) : AdminController
 {
     private readonly IProductService _productService = productService;
 
-    [HttpPost]
-    [Route("GetProductList")]
-    public async Task<SpecificationListAggregation<ProductGetListSpecificationType>> GetList([FromBody] ProductGetList data)
+    [HttpGet]
+    [Route("GetList")]
+    public async Task<SpecificationListAggregation<ProductGetListSpecificationType>> GetList([FromQuery] ProductGetList data)
     {
-        return await _productService.GetList(data.SubCategoryId, data.Pagination, data.Filters, data.OrderBy);
+        return await _productService.GetList(data.SubCategoryId, data.Pagination, data.Filters, data.OrderBy, data.Deleted);
     }
 
     [HttpPost]

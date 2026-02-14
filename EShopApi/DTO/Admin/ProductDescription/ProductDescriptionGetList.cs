@@ -1,12 +1,11 @@
 ﻿using Core.DTO.Core;
 
-namespace Application.DTO.Admin;
+namespace Application.DTO.Admin.ProductDescription;
 
-public class ProductGetList
+public class ProductDescriptionGetList
 {
-    public int SubCategoryId { get; set; }
+    public int ProductId { get; set; }
     public AppPaginationList Pagination { get; set; }
-    public List<AppFilters>? Filters { get; set; }
     public AppOrderBy OrderBy { get; set; }
     public bool Deleted { get; set; }
 }

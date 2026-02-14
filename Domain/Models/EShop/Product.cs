@@ -5,7 +5,7 @@ public class Product(
     string name,
     double price, 
     int quantity,
-    bool hidden = false,
+    bool deleted = false,
     int id = default
 )
 {
@@ -14,7 +14,7 @@ public class Product(
     public string Name { get; private set; } = name;
     public double Price { get; private set; } = price;
     public int Quantity { get; private set; } = quantity;
-    public bool Hidden { get; private set; } = hidden;
+    public bool Deleted { get; private set; } = deleted;
 
     public virtual Subcategory Subcategory { get; set; }
 
@@ -37,14 +37,14 @@ public class Product(
         if(quantity != null) Quantity = (int)quantity;
     }
 
-    public void Delete()
+    public void Remove()
     {
-        Hidden = true;
+        Deleted = true;
     }
 
     public void Restore()
     {
-        Hidden = false;
+        Deleted = false;
     }
 }
 
