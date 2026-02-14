@@ -2,8 +2,9 @@
 
 namespace Application.DTO.Admin.Product;
 
-public class ProductDelete
+public class ProductGet
 {
     [Range(1, int.MaxValue)]
     public int Id { get; set; }
+    public bool Deleted { get; set; }
 }

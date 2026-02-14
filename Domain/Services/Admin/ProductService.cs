@@ -45,6 +45,13 @@ public class ProductService(
         return data;
     }
 
+    public async Task<ProductGetListSpecificationType> Get(int id, bool deleted = false)
+    {
+        var productSpec = new ProductGetSpecification(id, deleted);
+        return await _productRepository.FirstOrDefaultAsync(productSpec)
+            ?? throw new BadRequestException($"Could not found product with id {id}");
+    }
+
     public async Task Add(
         int subcategoryId, 
         string name, 
@@ -71,7 +78,7 @@ public class ProductService(
             foreach (var photo in photos)
             {
                 var generatedName = $"{Guid.NewGuid()}-{photo.FileName}";
-                var productPhoto = new ProductPhotos(product.Id, photo.FileName, generatedName);
+                var productPhoto = new ProductPhotos(product.Id, photo.FileName, photo.FileExtension, generatedName);
                 productPhotos.Add(productPhoto);
                 await _storageService.Upload($"{_path}/{product.Id}/{productPhoto.GeneratedName}", photo.Content);
             }

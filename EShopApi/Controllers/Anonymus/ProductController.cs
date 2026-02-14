@@ -15,4 +15,11 @@ public class ProductController(IProductService productService) : AnonymusControl
     {
         return await _productService.GetList(data.SubCategoryId, data.Pagination, data.Filters, data.OrderBy, data.Deleted);
     }
+
+    [HttpGet]
+    [Route("Product")]
+    public async Task<ProductGetListSpecificationType> GetList([FromQuery] ProductGet data)
+    {
+        return await _productService.Get(data.Id);
+    }
 }

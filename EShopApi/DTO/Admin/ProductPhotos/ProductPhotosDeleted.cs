@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Application.DTO.Admin.Product;
+namespace Application.DTO.Admin.ProductPhotos;
 
-public class ProductDelete
+public class ProductPhotosDeleted
 {
     [Range(1, int.MaxValue)]
     public int Id { get; set; }

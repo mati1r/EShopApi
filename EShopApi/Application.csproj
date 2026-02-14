@@ -28,8 +28,4 @@
     <ProjectReference Include="..\Infrastracture\Infrastracture.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="DTO\Admin\ProductPhotos\" />
-  </ItemGroup>
-
 </Project>

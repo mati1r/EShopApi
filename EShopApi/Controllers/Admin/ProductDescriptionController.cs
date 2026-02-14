@@ -47,8 +47,8 @@ public class ProductDescriptionController(IProductDescriptionService productDesc
         );
     }
 
-    [HttpDelete]
-    [Route("Product")]
+    [HttpPost]
+    [Route("Delete")]
     public async Task Delete([FromBody] ProductDescriptionDelete data)
     {
         await _productDescriptionService.Delete(data.Id);
