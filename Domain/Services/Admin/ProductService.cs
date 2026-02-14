@@ -18,7 +18,7 @@ public class ProductService(
     private readonly IRepository<Product> _productRepository = productRepository;
     private readonly IRepository<Subcategory> _subcategoryRepository = subcategoryRepository;
     private readonly IStorageService _storageService = storageService;
-    private readonly string _path = "product-photos/";
+    private readonly string _path = "product-photos";
 
     public async Task<SpecificationListAggregation<ProductGetListSpecificationType>> GetList(
         int subCategoryId, 
