@@ -1,6 +1,4 @@
-﻿using Core.Models.EShop;
-
-namespace Core.Models.EShop;
+﻿namespace Core.Models.EShop;
 
 public class Subcategory(
     int categoryId, 
@@ -16,4 +14,10 @@ public class Subcategory(
 
     public ICollection<Product> Products { get; private set; } = [];
     public ICollection<SubcategoryRefProductType> SubcategoryRefProductTypes { get; private set; } = [];
+
+    public void Update(int categoryId, string name)
+    {
+        CategoryId = categoryId;
+        Name = name;
+    }
 }

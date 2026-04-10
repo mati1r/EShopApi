@@ -64,7 +64,7 @@ public class ProductService(
         _productRepository.BeginTransaction();
         try
         {
-            _ = await _subcategoryRepository.GetByIdAsync(subcategoryId) ?? throw new BadRequestException($"Could not found subcategory with id {subcategoryId}"); ;
+            _ = await _subcategoryRepository.GetByIdAsync(subcategoryId) ?? throw new BadRequestException($"Could not found subcategory with id {subcategoryId}");
             var product = new Product(subcategoryId, name, price, quantity);
             await _productRepository.AddAsync(product);
 

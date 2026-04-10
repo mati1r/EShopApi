@@ -21,6 +21,7 @@ public static class DependencyInjection
     public static IServiceCollection AddAdminServices(this IServiceCollection services)
     {
         services.AddScoped<Core.IServices.Admin.ICategoryService, Core.Services.Admin.CategoryService>();
+        services.AddScoped<Core.IServices.Admin.ISubcategoryService, Core.Services.Admin.SubcategoryService>();
         services.AddScoped<Core.IServices.Admin.IFilterTypeService, Core.Services.Admin.FilterTypeService>();
         services.AddScoped<Core.IServices.Admin.IProductTypeService, Core.Services.Admin.ProductTypeService>();
         services.AddScoped<Core.IServices.Admin.IProductElementService, Core.Services.Admin.ProductElementService>();
@@ -28,6 +29,7 @@ public static class DependencyInjection
         services.AddScoped<Core.IServices.Admin.IProductService, Core.Services.Admin.ProductService>();
         services.AddScoped<Core.IServices.Admin.IProductPhotosService, Core.Services.Admin.ProductPhotosService>();
         services.AddScoped<Core.IServices.Admin.IProductDescriptionService, Core.Services.Admin.ProductDescriptionService>();
+        services.AddScoped<Core.IServices.Admin.ISubcategoryRefProductTypeService, Core.Services.Admin.SubcategoryRefProductTypeService>();
 
         return services;
     }
