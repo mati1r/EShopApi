@@ -1,4 +1,4 @@
-﻿namespace Core.Enums;
+﻿namespace Core.Enums.OrderBy;
 
 public enum ProductOrderByEnum: int
 {

@@ -2,6 +2,7 @@
 using Core.DTO.Admin.ProductValue;
 using Core.IServices.Admin;
 using Core.SpecificationTypes.Admin.ProductValue;
+using Core.SpecificationTypes.Core;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Application.Controllers.Admin;
@@ -12,9 +13,9 @@ public class ProductValueController(IProductValueService productValueService) : 
 
     [HttpGet]
     [Route("ProductValue")]
-    public async Task<List<ProductValueGetListSpecificationType>> GetList([FromQuery] ProductValueGetList data)
+    public async Task<SpecificationListAggregation<ProductValueGetListSpecificationType>> GetList([FromQuery] ProductValueGetList data)
     {
-        return await _productValueService.GetList(data.ProductTypeId);
+        return await _productValueService.GetList(data.ProductTypeId, data.Pagination, data.OrderBy);
     }
 
     [HttpPost]

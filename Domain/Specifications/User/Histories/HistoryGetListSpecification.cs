@@ -1,9 +1,8 @@
 ﻿using System.Linq.Expressions;
 using Ardalis.Specification;
 using Core.DTO.Core;
-using Core.Enums;
+using Core.Enums.Common;
 using Core.Models.EShop;
-using Core.SpecificationTypes.Core;
 using Core.SpecificationTypes.User.Histories;
 
 namespace Core.Specifications.User.Histories;
@@ -31,8 +30,8 @@ public class HistoryGetListSpecification : Specification<History, HistoryGetList
             }).Where(h => h.UserId == userId);
 
         if (orderBy.OrderDirection == OrderDirectionEnum.Asc) query.OrderBy(orderByExpression);
-        if (orderBy.OrderDirection == OrderDirectionEnum.Desc) query.OrderByDescending(orderByExpression);
+        else if (orderBy.OrderDirection == OrderDirectionEnum.Desc) query.OrderByDescending(orderByExpression);
 
-        query.AsTracking();
+        query.AsNoTracking();
     }
 }

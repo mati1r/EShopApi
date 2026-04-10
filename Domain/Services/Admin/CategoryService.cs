@@ -1,8 +1,10 @@
-﻿using Core.Exceptions;
+﻿using Core.DTO.Core;
+using Core.Exceptions;
 using Core.IServices.Admin;
 using Core.Models.EShop;
 using Core.Specifications.Admin.Category;
 using Core.SpecificationTypes.Admin.Category;
+using Core.SpecificationTypes.Core;
 
 namespace Core.Services.Admin;
 
@@ -12,10 +14,10 @@ public class CategoryService(
 {
     private readonly IRepository<Category> _categoryRepository = categoryRepository;
 
-    public async Task<List<CategoryGetListSpecificationType>> GetList()
+    public async Task<SpecificationListAggregation<CategoryGetListSpecificationType>> GetList(AppPaginationList pagination, AppOrderBy orderBy)
     {
-        var categoryGetListSpec = new CategoryGetListSpecification();
-        return await _categoryRepository.ListAsync(categoryGetListSpec);
+        var categoryGetListSpec = new CategoryGetListSpecification(orderBy);
+        return await _categoryRepository.AppListAsync(categoryGetListSpec, pagination.PerPage, pagination.Page);
     }
 
     public async Task Add(string name)

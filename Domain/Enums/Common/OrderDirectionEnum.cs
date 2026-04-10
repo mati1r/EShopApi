@@ -1,4 +1,4 @@
-﻿namespace Core.Enums;
+﻿namespace Core.Enums.Common;
 
 public enum OrderDirectionEnum: int
 {

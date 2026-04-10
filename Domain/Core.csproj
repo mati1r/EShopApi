@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Enums\ProductElementOrderByEnum.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Ardalis.Specification.EntityFrameworkCore" Version="8.0.0" />
     <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="8.0.1" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.2" />
@@ -16,6 +20,10 @@
   <ItemGroup>
     <Folder Include="SpecificationTypes\Anonymus\ProductElement\" />
     <Folder Include="SpecificationTypes\Anonymus\Product\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Enums\OrderBy\ProductElementOrderByEnum.cs" />
   </ItemGroup>
 
 </Project>

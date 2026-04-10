@@ -1,7 +1,8 @@
 ﻿using System.Linq.Expressions;
 using Ardalis.Specification;
 using Core.DTO.Core;
-using Core.Enums;
+using Core.Enums.Common;
+using Core.Enums.OrderBy;
 using Core.SpecificationTypes.Admin.ProductPhotos;
 
 namespace Core.Specifications.Admin.ProductPhotos;
@@ -12,14 +13,14 @@ public class ProductPhotosGetListSpecification : Specification<Models.EShop.Prod
     {
         Expression<Func<Models.EShop.ProductPhotos, object?>> orderByExpression = orderBy.OrderBy switch
         {
-            (int)ProductPhotosDirectionOrderBy.ProductId => p => p.ProductId,
-            (int)ProductPhotosDirectionOrderBy.FileName => p => p.FileName,
-            (int)ProductPhotosDirectionOrderBy.Extenstion => p => p.Extenstion,
-            (int)ProductPhotosDirectionOrderBy.Id => p => p.Id,
+            (int)ProductPhotosDirectionOrderByEnum.ProductId => p => p.ProductId,
+            (int)ProductPhotosDirectionOrderByEnum.FileName => p => p.FileName,
+            (int)ProductPhotosDirectionOrderByEnum.Extenstion => p => p.Extenstion,
+            (int)ProductPhotosDirectionOrderByEnum.Id => p => p.Id,
             _ => p => p.Id
         };
 
-        var query = Query
+        Query
             .Select(p => new ProductPhotosGetListSpecificationType
             {
                 Id = p.Id,
@@ -29,9 +30,9 @@ public class ProductPhotosGetListSpecification : Specification<Models.EShop.Prod
             }).Where(p => p.ProductId == productId && p.Deleted == deleted);
 
 
-        if (orderBy.OrderDirection == OrderDirectionEnum.Asc) query.OrderBy(orderByExpression);
-        if (orderBy.OrderDirection == OrderDirectionEnum.Desc) query.OrderByDescending(orderByExpression);
+        if (orderBy.OrderDirection == OrderDirectionEnum.Asc) Query.OrderBy(orderByExpression);
+        else if (orderBy.OrderDirection == OrderDirectionEnum.Desc) Query.OrderByDescending(orderByExpression);
 
-        query.AsTracking();
+        Query.AsNoTracking();
     }
 }

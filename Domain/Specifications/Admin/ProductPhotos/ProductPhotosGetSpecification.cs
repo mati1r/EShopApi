@@ -7,13 +7,13 @@ public class ProductPhotosGetSpecification : Specification<Models.EShop.ProductP
 { 
     public ProductPhotosGetSpecification(int id)
     {
-        var query = Query
+        Query
             .Select(pd => new ProductPhotosGetListSpecificationType
             {
                 Id = pd.Id,
                 ProductId = pd.ProductId,
                 FileName = pd.FileName,
                 Extension = pd.Extenstion,
-            }).Where(pd => pd.Deleted == false && pd.Id == id).AsTracking();
+            }).Where(pd => pd.Deleted == false && pd.Id == id).AsNoTracking();
     }
 }

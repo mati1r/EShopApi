@@ -1,4 +1,5 @@
 ﻿using Application.DTO.Admin.FilterType;
+using Application.DTO.Common;
 using Core.IServices.Admin;
 using Core.SpecificationTypes.Core;
 using Microsoft.AspNetCore.Mvc;
@@ -11,9 +12,9 @@ public class FilterTypeController(IFilterTypeService filterTypeService) : AdminC
 
     [HttpGet]
     [Route("FilterType")]
-    public async Task<List<SelectListSpecificationType>> GetList()
+    public async Task<SpecificationListAggregation<SelectListSpecificationType>> GetList([FromQuery] AppBasicContentControl data)
     {
-        return await _filterTypeService.GetList();
+        return await _filterTypeService.GetList(data.Pagination, data.OrderBy);
     }
 
     [HttpPost]

@@ -1,6 +1,8 @@
 ﻿using Application.DTO.Admin.ProductType;
+using Application.DTO.Common;
 using Core.IServices.Admin;
 using Core.SpecificationTypes.Admin.ProductType;
+using Core.SpecificationTypes.Core;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Application.Controllers.Admin;
@@ -11,9 +13,9 @@ public class ProductTypeController(IProductTypeService productTypeService) : Adm
 
     [HttpGet]
     [Route("Category")]
-    public async Task<List<ProductTypeGetListSpecificationType>> GetList()
+    public async Task<SpecificationListAggregation<ProductTypeGetListSpecificationType>> GetList([FromQuery] AppBasicContentControl data)
     {
-        return await _productTypeService.GetList();
+        return await _productTypeService.GetList(data.Pagination, data.OrderBy);
     }
 
     [HttpPost]

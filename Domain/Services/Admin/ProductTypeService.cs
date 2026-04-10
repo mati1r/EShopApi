@@ -1,9 +1,11 @@
-﻿using Core.Exceptions;
+﻿using Core.DTO.Core;
+using Core.Exceptions;
 using Core.IServices.Admin;
 using Core.Models.EShop;
 using Core.Specifications.Admin.ProductType;
 using Core.Specifications.Core;
 using Core.SpecificationTypes.Admin.ProductType;
+using Core.SpecificationTypes.Core;
 
 namespace Core.Services.Admin;
 
@@ -17,10 +19,10 @@ public class ProductTypeService(
     private readonly IRepository<ProductElement> _productElementRepostiory = productElementRepostiory;
     private readonly IRepository<FilterType> _filterTypeRepository = filterTypeRepository;
 
-    public async Task<List<ProductTypeGetListSpecificationType>> GetList()
+    public async Task<SpecificationListAggregation<ProductTypeGetListSpecificationType>> GetList(AppPaginationList pagination, AppOrderBy orderBy)
     {
-        var productTypeListSpec = new ProductTypeGetListSpecification();
-        return await _productTypeRepository.ListAsync(productTypeListSpec);
+        var productTypeListSpec = new ProductTypeGetListSpecification(orderBy);
+        return await _productTypeRepository.AppListAsync(productTypeListSpec, pagination.PerPage, pagination.Page);
     }
 
     public async Task Add(string name, int filterTypeId)

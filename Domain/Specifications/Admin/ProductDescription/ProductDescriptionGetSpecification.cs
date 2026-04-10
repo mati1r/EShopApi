@@ -7,12 +7,12 @@ public class ProductDescriptionGetSpecification : Specification<Models.EShop.Pro
 {
     public ProductDescriptionGetSpecification(int id)
     {
-        var query = Query
+        Query
             .Select(pd => new ProductDescriptionGetListSpecificationType
             {
                 Id = pd.Id,
                 ProductId = pd.ProductId,
                 Description = pd.Description
-            }).Where(pd => pd.Deleted == false && pd.Id == id).AsTracking();
+            }).Where(pd => pd.Deleted == false && pd.Id == id).AsNoTracking();
     }
 }

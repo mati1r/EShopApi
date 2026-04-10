@@ -1,7 +1,8 @@
 ﻿using System.Linq.Expressions;
 using Ardalis.Specification;
 using Core.DTO.Core;
-using Core.Enums;
+using Core.Enums.Common;
+using Core.Enums.OrderBy;
 using Core.Models.EShop;
 using Core.SpecificationTypes.Core;
 
@@ -19,7 +20,7 @@ public class ProductGetListSpecification : Specification<Product, ProductGetList
             _ => p => p.Id
         };
 
-        var query = Query
+        Query
             .Select(p => new ProductGetListSpecificationType
             {
                 Id = p.Id,
@@ -48,7 +49,7 @@ public class ProductGetListSpecification : Specification<Product, ProductGetList
             {
                 if (filter.FilterTypeId == FilterTypeEnum.MultiSelect && filter.FilterValueIds != null)
                 {
-                    query.Where(p =>
+                    Query.Where(p =>
                         p.ProductElements.Any(pe =>
                             pe.ProductType.FilterTypeId == (int)filter.FilterTypeId &&
                             filter.FilterValueIds.Contains(pe.ProductValueId)
@@ -59,7 +60,7 @@ public class ProductGetListSpecification : Specification<Product, ProductGetList
                 if (filter.FilterTypeId == FilterTypeEnum.SingleSelect && filter.FilterValueIds != null && filter.FilterValueIds.Count == 1)
                 {
                     var filterValueId = filter.FilterValueIds.First();
-                    query.Where(p =>
+                    Query.Where(p =>
                         p.ProductElements.Any(pe =>
                             pe.ProductType.FilterTypeId == (int)filter.FilterTypeId &&
                             filterValueId == pe.ProductValueId
@@ -69,7 +70,7 @@ public class ProductGetListSpecification : Specification<Product, ProductGetList
 
                 if (filter.FilterTypeId == FilterTypeEnum.Range && filter.FilterRangeMin != null && filter.FilterRangeMax != null)
                 {
-                    query.Where(p =>
+                    Query.Where(p =>
                         p.ProductElements.Any(pe =>
                             pe.ProductType.FilterTypeId == (int)filter.FilterTypeId &&
                             pe.ProductValue.Value >= filter.FilterRangeMin &&
@@ -80,9 +81,9 @@ public class ProductGetListSpecification : Specification<Product, ProductGetList
             }
         }
 
-        if (orderBy.OrderDirection == OrderDirectionEnum.Asc) query.OrderBy(orderByExpression);
-        if (orderBy.OrderDirection == OrderDirectionEnum.Desc) query.OrderByDescending(orderByExpression);
+        if (orderBy.OrderDirection == OrderDirectionEnum.Asc) Query.OrderBy(orderByExpression);
+        else if (orderBy.OrderDirection == OrderDirectionEnum.Desc) Query.OrderByDescending(orderByExpression);
 
-        query.AsTracking();
+        Query.AsNoTracking();
     }
 }

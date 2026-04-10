@@ -1,10 +1,12 @@
 ﻿using Core.DTO.Admin.ProductElement;
+using Core.DTO.Core;
 using Core.Exceptions;
 using Core.IServices.Admin;
 using Core.Models.EShop;
 using Core.Specifications.Admin.ProductElement;
 using Core.Specifications.Core;
 using Core.SpecificationTypes.Admin.ProductElement;
+using Core.SpecificationTypes.Core;
 
 namespace Core.Services.Admin;
 
@@ -20,10 +22,10 @@ public class ProductElementService(
     private readonly IRepository<ProductValue> _productValueRepository = productValueRepository;
     private readonly IRepository<Product> _productRepository = productRepository;
 
-    public async Task<List<ProductElementGetListSpecificationType>> GetList(int productId)
+    public async Task<SpecificationListAggregation<ProductElementGetListSpecificationType>> GetList(int productId, AppPaginationList pagination, AppOrderBy orderBy)
     {
-        var productElementListSpec = new ProductElementGetListSpecification(productId);
-        return await _productElementRepository.ListAsync(productElementListSpec);
+        var productElementListSpec = new ProductElementGetListSpecification(productId, orderBy);
+        return await _productElementRepository.AppListAsync(productElementListSpec, pagination.PerPage, pagination.Page);
     }
 
     public async Task Add(int productTypeId, int productValueId, int productId)

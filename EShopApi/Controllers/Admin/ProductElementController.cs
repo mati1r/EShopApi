@@ -2,6 +2,7 @@
 using Core.DTO.Admin.ProductElement;
 using Core.IServices.Admin;
 using Core.SpecificationTypes.Admin.ProductElement;
+using Core.SpecificationTypes.Core;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Application.Controllers.Admin;
@@ -12,9 +13,9 @@ public class ProductElementController(IProductElementService productElementServi
 
     [HttpGet]
     [Route("ProductElement")]
-    public async Task<List<ProductElementGetListSpecificationType>> GetList([FromQuery] ProductElementGetList data)
+    public async Task<SpecificationListAggregation<ProductElementGetListSpecificationType>> GetList([FromQuery] ProductElementGetList data)
     {
-        return await _productElementService.GetList(data.ProductId);
+        return await _productElementService.GetList(data.ProductId, data.Pagination, data.OrderBy);
     }
 
     [HttpPost]
