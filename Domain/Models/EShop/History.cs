@@ -4,6 +4,7 @@ public class History(
     int paymentTypeId,
     double sumPrice,
     int addressId,
+    string anonymusUserAccessKey,
     int? userId = null,
     int id = default
 )
@@ -11,6 +12,7 @@ public class History(
     public int Id { get; private set; } = id;
     public int PaymentTypeId { get; private set; } = paymentTypeId;
     public double SumPrice { get; private set; } = sumPrice;
+    public string AnonymusUserAccessKey { get; private set; } = anonymusUserAccessKey;
     public int AddressId { get; private set; } = addressId;
     public int? UserId { get; private set; } = userId;
     public DateTime CreatedAt { get; private set; } = DateTime.UtcNow;

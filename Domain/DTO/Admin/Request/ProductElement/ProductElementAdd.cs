@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Core.DTO.Admin.ProductElement;
+namespace Core.DTO.Admin.Request.ProductElement;
 
 public class ProductElementAdd
 {

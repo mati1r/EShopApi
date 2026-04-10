@@ -44,6 +44,7 @@ public static class DependencyInjection
     public static IServiceCollection AddUserServices(this IServiceCollection services)
     {
         services.AddScoped<IHistoryService, HistoryService>();
+        services.AddScoped<IProfileService, ProfileService>();
 
         return services;
     }

@@ -1,4 +1,4 @@
-﻿using Core.DTO.Admin.ProductValue;
+﻿using Core.DTO.Admin.Request.ProductValue;
 using Core.DTO.Core;
 using Core.Exceptions;
 using Core.IServices.Admin;

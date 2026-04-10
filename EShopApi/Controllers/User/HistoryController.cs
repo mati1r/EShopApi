@@ -1,4 +1,4 @@
-﻿using Application.DTO.User;
+﻿using Application.DTO.User.History;
 using Core.Exceptions;
 using Core.IServices.User;
 using Core.SpecificationTypes.Core;
@@ -14,11 +14,8 @@ public class HistoryController(IHistoryService historyService) : UserController
     [HttpGet("GetList")]
     public async Task<SpecificationListAggregation<HistoryGetListSpecificationType>> GetList([FromQuery] HistoryGetList data)
     {
-        if (CurrentUserId is null)
-            throw new AppErrorException("Could not get currently loged in user");
-
         return await _historyService.GetList(
-            (int)CurrentUserId,
+            CurrentUserId,
             data.Pagination,
             data.OrderBy
         );

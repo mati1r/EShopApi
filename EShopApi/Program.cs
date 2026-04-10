@@ -8,7 +8,6 @@ using Application.ProgramConfiguration;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.  
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(static swagger =>
@@ -59,7 +58,6 @@ builder.Services.AddCustomJwtBearer(builder.Configuration);
 
 builder.Services.AddRateLimiter(r =>
 {
-    // Globlal rate limiter configuration
     r.GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(context =>
     {
         var userId = context.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value ?? "anonymous";
@@ -76,7 +74,6 @@ var app = builder.Build();
 
 app.UseMiddleware<ErrorHandlingMiddleware>();
 
-// Configure the HTTP request pipeline.  
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

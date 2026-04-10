@@ -125,11 +125,13 @@ public class AuthService : IAuthService
         }
 
 
-        User newUser = new User();
-        newUser.Email = email;
-        newUser.Name = name;
+        User newUser = new()
+        {
+            Email = email,
+            Name = name,
 
-        newUser.Salt = Hash.GenerateSalt(16);
+            Salt = Hash.GenerateSalt(16)
+        };
         newUser.Password = Hash.HashPassword(password, newUser.Salt);
         newUser.Roles = ["User"];
 

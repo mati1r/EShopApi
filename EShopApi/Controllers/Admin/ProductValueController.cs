@@ -1,5 +1,5 @@
 ﻿using Application.DTO.Admin.ProductValue;
-using Core.DTO.Admin.ProductValue;
+using Core.DTO.Admin.Request.ProductValue;
 using Core.IServices.Admin;
 using Core.SpecificationTypes.Admin.ProductValue;
 using Core.SpecificationTypes.Core;

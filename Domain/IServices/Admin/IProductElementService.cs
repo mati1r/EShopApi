@@ -1,4 +1,4 @@
-﻿using Core.DTO.Admin.ProductElement;
+﻿using Core.DTO.Admin.Request.ProductElement;
 using Core.DTO.Core;
 using Core.SpecificationTypes.Admin.ProductElement;
 using Core.SpecificationTypes.Core;

@@ -15,6 +15,8 @@ public class User
 
     public int? AddressId { get; set; } = null;
 
+    public virtual Address? Address { get; set; }
+
     public ICollection<Tokens> Tokens { get; set; } = [];
     public ICollection<History> Histories { get; set; } = [];
 }
