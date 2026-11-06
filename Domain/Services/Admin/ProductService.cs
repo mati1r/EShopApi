@@ -1,9 +1,12 @@
-﻿using Core.DTO.Core;
+﻿using Core.DTO.Admin.Request.Product;
+using Core.DTO.Core;
 using Core.Exceptions;
 using Core.IServices.Admin;
 using Core.IServices.Infrastructure;
 using Core.Models.EShop;
+using Core.Specifications.Admin.Product;
 using Core.Specifications.Anonymus;
+using Core.Specifications.Core;
 using Core.SpecificationTypes.Core;
 
 namespace Core.Services.Admin;
@@ -11,11 +14,13 @@ namespace Core.Services.Admin;
 public class ProductService(
     IRepository<Product> productRepository,
     IRepository<Subcategory> subcategoryRepository,
+    IRepository<ProductPrice> productPriceRepository,
     IStorageService storageService
 ) : IProductService
 {
     private readonly IRepository<Product> _productRepository = productRepository;
     private readonly IRepository<Subcategory> _subcategoryRepository = subcategoryRepository;
+    private readonly IRepository<ProductPrice> _productPriceRepository = productPriceRepository;
     private readonly IStorageService _storageService = storageService;
     private readonly string _path = "product-photos";
 
@@ -56,16 +61,16 @@ public class ProductService(
         int subcategoryId, 
         string name, 
         List<string> descriptions, 
-        double price, 
         List<FileModel> photos, 
-        int quantity
+        int quantity,
+        List<ProductPriceAdd> pricesToAdd
     )
     {
         _productRepository.BeginTransaction();
         try
         {
             _ = await _subcategoryRepository.GetByIdAsync(subcategoryId) ?? throw new BadRequestException($"Could not found subcategory with id {subcategoryId}");
-            var product = new Product(subcategoryId, name, price, quantity);
+            var product = new Product(subcategoryId, name, quantity);
             await _productRepository.AddAsync(product);
 
             List<ProductDescriptions> productDescriptions = [];
@@ -86,6 +91,11 @@ public class ProductService(
             product.ProductDescriptions = productDescriptions;
             product.ProductPhotos = productPhotos;  
 
+            foreach (var price in pricesToAdd)
+            {
+                product.AddPrice(price.Value, price.DateFrom, price.DateTo);
+            }
+
             await _productRepository.UpdateAsync(product);
             _productRepository.CommitTransaction();
         }
@@ -99,8 +109,8 @@ public class ProductService(
         int id,
         int? subcategoryId, 
         string? name,
-        double? price, 
-        int? quantity
+        int? quantity,
+        List<ProductPriceChange> pricesToChange
     )
     {
         if(subcategoryId != null) _ = await _subcategoryRepository.GetByIdAsync((int)subcategoryId) 
@@ -109,7 +119,8 @@ public class ProductService(
         var product = await _productRepository.GetByIdAsync(id) 
             ?? throw new BadRequestException($"Could not found product with id {id}");
 
-        product.Update(subcategoryId, name, price, quantity);
+        product.Update(subcategoryId, name, quantity);
+        await UpdatePrice(product, pricesToChange);
         await _productRepository.UpdateAsync(product);
     }
 
@@ -125,5 +136,34 @@ public class ProductService(
         var product = await _productRepository.GetByIdAsync(id) ?? throw new BadRequestException($"Could not found product with id {id}");
         product.Restore();
         await _productRepository.SaveChangesAsync();
+    }
+
+    private async Task UpdatePrice(Product product, List<ProductPriceChange> pricesToChange)
+    {
+        var productIds = pricesToChange.Select(pp => pp.Id);
+        var productPricesSpec = new UniversalSpecification<ProductPrice>(pp => pp.Deleted == false && productIds.Contains(pp.Id) && pp.Product.Id == product.Id);
+        var productPrices = await _productPriceRepository.ListAsync(productPricesSpec);
+
+        foreach (var priceToChange in pricesToChange)
+        {
+            var productPrice = productPrices.FirstOrDefault(pp => pp.Id == priceToChange.Id);
+            if (productPrice == null)
+            {
+                continue;
+            }
+
+            product.UpdatePrice(productPrice, priceToChange.Value);
+        }
+    }
+
+    public async Task<SpecificationListAggregation<ProductPriceListSpecificationType>> GetPricesList(int productId, AppPaginationList pagination, AppOrderBy orderBy, bool deleted)
+    {
+        var productSpec = new ProductGetSpecification(productId, deleted);
+        if (!await _productRepository.AnyAsync(productSpec)){
+            throw new BadRequestException($"Could not found product with id {productId}");
+        }
+
+        var productPricesListSpec = new ProductPriceListSpecification(productId, orderBy, deleted);
+        return await _productPriceRepository.AppListAsync(productPricesListSpec, pagination.PerPage, pagination.Page);
     }
 }

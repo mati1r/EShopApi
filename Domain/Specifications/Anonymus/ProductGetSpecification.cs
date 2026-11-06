@@ -14,7 +14,6 @@ public class ProductGetSpecification : Specification<Product, ProductGetListSpec
             {
                 Id = p.Id,
                 Name = p.Name,
-                Price = p.Price,
                 Quantity = p.Quantity,
                 Descriptions = p.ProductDescriptions.Where(pd => pd.Deleted == false).Select(pd => pd.Description).ToList(),
                 ProductPhotosName = p.ProductPhotos.Where(pp => pp.Deleted == false).Select(pp => pp.GeneratedName).ToList(),
@@ -29,7 +28,14 @@ public class ProductGetSpecification : Specification<Product, ProductGetListSpec
                         ProductTypeFilterId = pe.ProductType.FilterTypeId,
                         ProductTypeFilterName = pe.ProductType.Name
                     })
-                    .ToList()
+                    .ToList(),
+                ProductPrices = p.ProductPrices.Where(pp => pp.Deleted == false).Select(pp => new ProductPriceListSpecificationType
+                {
+                    Id = pp.Id,
+                    Value = pp.Value,
+                    DateFrom = pp.DateFrom,
+                    DateTo = pp.DateTo,
+                }).ToList(),
             }).Where(p => p.Id == id && p.Deleted == deleted).
             AsTracking();
     }

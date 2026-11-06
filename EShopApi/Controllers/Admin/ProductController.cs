@@ -20,6 +20,13 @@ public class ProductController(IProductService productService) : AdminController
     }
 
     [HttpGet]
+    [Route("GetPrices")]
+    public async Task<SpecificationListAggregation<ProductPriceListSpecificationType>> GetList([FromQuery] ProductPricesGetList data)
+    {
+        return await _productService.GetPricesList(data.ProductId, data.Pagination, data.OrderBy, data.Deleted);
+    }
+
+    [HttpGet]
     [Route("Product")]
     public async Task<ProductGetListSpecificationType> GetList([FromQuery] ProductGet data)
     {
@@ -42,9 +49,9 @@ public class ProductController(IProductService productService) : AdminController
             data.SubcategoryId, 
             data.Name,
             data.Descriptions,
-            data.Price, 
             files,
-            data.Quantity
+            data.Quantity,
+            data.PricesToAdd
         );
     }
 
@@ -56,8 +63,8 @@ public class ProductController(IProductService productService) : AdminController
             data.Id, 
             data.SubcategoryId, 
             data.Name,
-            data.Price, 
-            data.Quantity
+            data.Quantity,
+            data.PricesToChange
         );
     }
 

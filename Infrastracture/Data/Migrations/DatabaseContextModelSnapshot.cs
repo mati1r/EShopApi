@@ -198,9 +198,6 @@ namespace ApiTemplate.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<double>("Price")
-                        .HasColumnType("double");
-
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
@@ -298,6 +295,36 @@ namespace ApiTemplate.Migrations
                     b.HasIndex("ProductId");
 
                     b.ToTable("ProductPhotos");
+                });
+
+            modelBuilder.Entity("Core.Models.EShop.ProductPrice", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateOnly>("DateFrom")
+                        .HasColumnType("date");
+
+                    b.Property<DateOnly?>("DateTo")
+                        .HasColumnType("date");
+
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Value")
+                        .HasColumnType("double");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ProductPrice");
                 });
 
             modelBuilder.Entity("Core.Models.EShop.ProductRefHistory", b =>
@@ -576,6 +603,17 @@ namespace ApiTemplate.Migrations
                     b.Navigation("Product");
                 });
 
+            modelBuilder.Entity("Core.Models.EShop.ProductPrice", b =>
+                {
+                    b.HasOne("Core.Models.EShop.Product", "Product")
+                        .WithMany("ProductPrices")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("Core.Models.EShop.ProductRefHistory", b =>
                 {
                     b.HasOne("Core.Models.EShop.History", "History")
@@ -703,6 +741,8 @@ namespace ApiTemplate.Migrations
                     b.Navigation("ProductElements");
 
                     b.Navigation("ProductPhotos");
+
+                    b.Navigation("ProductPrices");
 
                     b.Navigation("ProductRefHistory");
                 });

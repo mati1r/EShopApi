@@ -12,10 +12,14 @@ public class ProductGetListSpecification : Specification<Product, ProductGetList
 {
     public ProductGetListSpecification(int subcategoryId, List<AppFilters>? filters, AppOrderBy orderBy, bool deleted)
     {
+        var currentDate = DateOnly.FromDateTime(DateTime.UtcNow);
         Expression<Func<Product, object?>> orderByExpression = orderBy.OrderBy switch
         {
             (int)ProductOrderByEnum.Name => p => p.Name,
-            (int)ProductOrderByEnum.Price => p => p.Price,
+            (int)ProductOrderByEnum.Price => p => p.ProductPrices
+                .Where(pp => pp.Deleted == false && (pp.DateTo ?? DateOnly.MaxValue) >= currentDate)
+                .OrderBy(pp => pp.DateTo ?? DateOnly.MaxValue)
+                .FirstOrDefault(),
             (int)ProductOrderByEnum.Quantity => p => p.Quantity,
             _ => p => p.Id
         };
@@ -25,7 +29,6 @@ public class ProductGetListSpecification : Specification<Product, ProductGetList
             {
                 Id = p.Id,
                 Name = p.Name,
-                Price = p.Price,
                 Quantity = p.Quantity,
                 Descriptions = p.ProductDescriptions.Where(pd => pd.Deleted == false).Select(pd => pd.Description).ToList(),
                 ProductPhotosName = p.ProductPhotos.Where(pp => pp.Deleted == false).Select(pp => pp.GeneratedName).ToList(),
@@ -40,7 +43,14 @@ public class ProductGetListSpecification : Specification<Product, ProductGetList
                         ProductTypeFilterId = pe.ProductType.FilterTypeId,
                         ProductTypeFilterName = pe.ProductType.Name
                     })
-                    .ToList()
+                    .ToList(),
+                ProductPrices = p.ProductPrices.Where(pp => pp.Deleted == false).Select(pp => new ProductPriceListSpecificationType
+                {
+                    Id = pp.Id,
+                    Value = pp.Value,
+                    DateFrom = pp.DateFrom,
+                    DateTo = pp.DateTo,
+                }).ToList(),
             }).Where(p => p.SubcategoryId == subcategoryId && p.Deleted == deleted);
 
         if (filters != null)
