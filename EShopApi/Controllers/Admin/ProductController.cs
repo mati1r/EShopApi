@@ -1,6 +1,9 @@
-﻿using Application.DTO.Admin;
+﻿using System.Text.Json;
+using Amazon.Runtime.Internal;
+using Application.DTO.Admin;
 using Application.DTO.Admin.Product;
 using Application.Helpers;
+using Core.DTO.Admin.Request.Product;
 using Core.DTO.Core;
 using Core.IServices.Admin;
 using Core.SpecificationTypes.Core;
@@ -11,6 +14,7 @@ namespace Application.Controllers.Admin;
 public class ProductController(IProductService productService) : AdminController
 {
     private readonly IProductService _productService = productService;
+    private readonly JsonSerializerOptions _pricesSerializerOptions = new() { PropertyNameCaseInsensitive = true };
 
     [HttpGet]
     [Route("GetList")]
@@ -45,13 +49,15 @@ public class ProductController(IProductService productService) : AdminController
             files.Add(file);
         }
 
+        var prices = JsonSerializer.Deserialize<List<ProductPriceAdd>>(data.PricesToAddJson, _pricesSerializerOptions) ?? [];
+
         await _productService.Add(
             data.SubcategoryId, 
             data.Name,
             data.Descriptions,
             files,
             data.Quantity,
-            data.PricesToAdd
+            prices
         );
     }
 
@@ -59,12 +65,14 @@ public class ProductController(IProductService productService) : AdminController
     [Route("Product")]
     public async Task Update([FromBody] ProductUpdate data)
     {
+        var prices = JsonSerializer.Deserialize<List<ProductPriceChange>>(data.PricesToChangeJson, _pricesSerializerOptions) ?? [];
+
         await _productService.Update(
             data.Id, 
             data.SubcategoryId, 
             data.Name,
             data.Quantity,
-            data.PricesToChange
+            prices
         );
     }
 

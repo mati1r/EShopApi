@@ -9,5 +9,5 @@ public class ProductGetListSpecificationType
     public List<string>? ProductPhotosName { get; set; } = [];
     public List<byte[]>? ProductPhotos { get; set; } = [];
     public List<ProductElementListSpecificationType> ProductElements { get; set; } = [];
-    public List<ProductPriceListSpecificationType> ProductPrices { get; set; } = [];
+    public ProductPriceListSpecificationType? ProductPrice { get; set; }
 }

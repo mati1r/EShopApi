@@ -12,5 +12,5 @@ public class ProductUpdate
     public int? SubcategoryId { get; set; }
     public string? Name { get; set; }
     public int? Quantity { get; set; }
-    public List<ProductPriceChange> PricesToChange { get; set; } = [];
+    public string PricesToChangeJson { get; set; } = "[]";
 }

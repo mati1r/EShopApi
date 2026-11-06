@@ -8,7 +8,7 @@ public class ProductGetSpecification : Specification<Product, ProductGetListSpec
 {
     public ProductGetSpecification(int id, bool deleted)
     {
-
+        var currentDate = DateOnly.FromDateTime(DateTime.UtcNow);
         var query = Query
             .Select(p => new ProductGetListSpecificationType
             {
@@ -29,13 +29,16 @@ public class ProductGetSpecification : Specification<Product, ProductGetListSpec
                         ProductTypeFilterName = pe.ProductType.Name
                     })
                     .ToList(),
-                ProductPrices = p.ProductPrices.Where(pp => pp.Deleted == false).Select(pp => new ProductPriceListSpecificationType
+                ProductPrice = p.ProductPrices
+                .Where(pp => pp.Deleted == false && (pp.DateTo ?? DateOnly.MaxValue) >= currentDate)
+                .OrderBy(pp => pp.DateTo ?? DateOnly.MaxValue)
+                .Select(pp => new ProductPriceListSpecificationType
                 {
                     Id = pp.Id,
                     Value = pp.Value,
                     DateFrom = pp.DateFrom,
-                    DateTo = pp.DateTo,
-                }).ToList(),
+                    DateTo = pp.DateTo
+                }).FirstOrDefault()
             }).Where(p => p.Id == id && p.Deleted == deleted).
             AsTracking();
     }

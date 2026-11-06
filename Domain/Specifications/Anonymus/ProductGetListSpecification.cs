@@ -44,13 +44,16 @@ public class ProductGetListSpecification : Specification<Product, ProductGetList
                         ProductTypeFilterName = pe.ProductType.Name
                     })
                     .ToList(),
-                ProductPrices = p.ProductPrices.Where(pp => pp.Deleted == false).Select(pp => new ProductPriceListSpecificationType
-                {
-                    Id = pp.Id,
-                    Value = pp.Value,
+                ProductPrice = p.ProductPrices
+                .Where(pp => pp.Deleted == false && (pp.DateTo ?? DateOnly.MaxValue) >= currentDate)
+                .OrderBy(pp => pp.DateTo ?? DateOnly.MaxValue)
+                .Select(pp => new ProductPriceListSpecificationType { 
+                    Id = pp.Id, 
+                    Value = pp.Value, 
                     DateFrom = pp.DateFrom,
-                    DateTo = pp.DateTo,
-                }).ToList(),
+                    DateTo = pp.DateTo 
+                })
+                .FirstOrDefault(),
             }).Where(p => p.SubcategoryId == subcategoryId && p.Deleted == deleted);
 
         if (filters != null)
